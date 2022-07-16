@@ -1,0 +1,698 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chaoo">
+  <meta name="keywords" content="Java, Blog">
+  
+    <meta name="description" content="LinkedList、ArrayList">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinkedList、ArrayList插入分析">
+<meta property="og:url" content="http://example.com/2022/07/08/2022-7-8-LinkedList%E3%80%81ArrayList%E6%8F%92%E5%85%A5%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="随风">
+<meta property="og:description" content="LinkedList、ArrayList">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081133374.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081143472.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081148335.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081346021.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081352539.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081355824.png">
+<meta property="article:published_time" content="2022-07-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-12T09:19:12.701Z">
+<meta property="article:author" content="Chaoo">
+<meta property="article:tag" content="源码">
+<meta property="article:tag" content="ArrayList">
+<meta property="article:tag" content="LinkedList">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081133374.png">
+  
+  
+  
+  <title>LinkedList、ArrayList插入分析 - 随风</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chaoo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LinkedList、ArrayList插入分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-08 00:00" pubdate>
+          2022年7月8日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LinkedList、ArrayList插入分析</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Begin"><a href="#Begin" class="headerlink" title="Begin"></a>Begin</h1><p><code>ArrayList</code>基于数组进行实现，<code>LinkedList</code>基于链表进行实现，所以基于数据结构的不同，遍历和查找多的情况下用 <code>ArrayList</code>、插入和删除频繁的情况下用 <code>LinkedList</code>，但是，这并不意味这<code>LinkedList</code>的插入效率一定比<code>ArrayList</code>好，当我们只需要在结尾插数据时，<code>ArryList</code>的效率是高于<code>LinkedList</code>的</p>
+<p>所以还需要具体情况具体分析</p>
+<h1 id="LinkedList数据结构"><a href="#LinkedList数据结构" class="headerlink" title="LinkedList数据结构"></a>LinkedList数据结构</h1><p><code>LinkedList</code>，是基于链表实现，由双向链条<code>next</code>、<code>prev</code>，把数据节点穿插起来。所以，在插入数据时，是不需要像我们上一章介绍的<code>ArrayList</code>那样，扩容数组</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081133374.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span>&lt;E&gt; &#123;<br>    E item;<br>    Node&lt;E&gt; next;<br>    Node&lt;E&gt; prev;<br><br>    Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;<br>        <span class="hljs-built_in">this</span>.item = element;<br>        <span class="hljs-built_in">this</span>.next = next;<br>        <span class="hljs-built_in">this</span>.prev = prev;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>与<code>ArrayList</code>不同，<code>LinkedList</code>的初始化不需要创建数组，因为它是一个链表结构，而且也没有传给构造函数初始化多少个空间的入参</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">LinkedList</span><span class="hljs-params">()</span> &#123;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-title function_">LinkedList</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> &#123;<br>    <span class="hljs-built_in">this</span>();<br>    addAll(c);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 初始化方式；普通方式</span><br>LinkedList&lt;String&gt; list01 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;String&gt;();<br>list01.add(<span class="hljs-string">&quot;1&quot;</span>);<br><br><span class="hljs-comment">// 初始化方式；Arrays.asList</span><br>LinkedList&lt;String&gt; list02 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;String&gt;(Arrays.asList(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>));<br><br><span class="hljs-comment">// 初始化方式；Collections.nCopies</span><br>LinkedList&lt;Integer&gt; list04 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LinkedList</span>&lt;Integer&gt;(Collections.nCopies(<span class="hljs-number">10</span>, <span class="hljs-number">0</span>)); <span class="hljs-comment">// 10个0</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h1><p><code>LinkedList</code>插入方法比较多，<code>List</code>中接口默认提供的是<code>add</code>，也可以指定位置插入，但是在<code>LinkedList</code>中还提供了头插<code>addFirst</code>和尾插<code>addLast</code></p>
+<h2 id="头插"><a href="#头插" class="headerlink" title="头插"></a>头插</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081143472.png" srcset="/img/loading.gif" lazyload alt="image-20220708114308409"></p>
+<ol>
+<li><code>ArrayList</code>头插时，需要把元素通过<code>Arrays.copyOf</code>的方式把数组元素移位，如果容量不足还需要扩容</li>
+<li><code>LinkedList</code>头插时，则不需要考虑扩容以及移位问题，直接把元素定位首位，插入即可</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">linkFirst</span><span class="hljs-params">(E e)</span> &#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; f = first;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>&lt;&gt;(<span class="hljs-literal">null</span>, e, f); <span class="hljs-comment">// 新的节点元素</span><br>    first = newNode;<br>    <span class="hljs-keyword">if</span> (f == <span class="hljs-literal">null</span>)<br>        last = newNode;<br>    <span class="hljs-keyword">else</span><br>        f.prev = newNode;<br>    size++;<br>    modCount++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在插入的时候只需要去创建新的节点元素，<code>new Node&lt;&gt;(null,e,f)</code>，接着把新的头元素赋值给<code>first</code>，后面判读f节点存在否，不存在就把头插节点作为最后一个节点，存在则用<code>f.prev</code>链接当前节点</p>
+<p><strong>对比</strong>：<code>LinkedList </code>更优</p>
+<p>在只进行头插的视乎，<code>ArrayList </code>需要做大量的位移和复制操作，而<code>LinkedList </code>的优势就体现出来了，耗时只是实例化一个对象</p>
+<h2 id="尾插"><a href="#尾插" class="headerlink" title="尾插"></a>尾插</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081148335.png" srcset="/img/loading.gif" lazyload alt="image-20220708114844272"></p>
+<ol>
+<li><code>ArrayList </code>尾插时，是不需要数据位移的，比较耗时的是数据的扩容时，需要拷贝迁移</li>
+<li><code>LinkedList</code> 尾插时，与头插相比耗时点会在对象的实例化上</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">linkLast</span><span class="hljs-params">(E e)</span> &#123;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; l = last;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>&lt;&gt;(l, e, <span class="hljs-literal">null</span>);<br>    last = newNode;<br>    <span class="hljs-keyword">if</span> (l == <span class="hljs-literal">null</span>)<br>        first = newNode;<br>    <span class="hljs-keyword">else</span><br>        l.next = newNode;<br>    size++;<br>    modCount++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>与头插代码相比几乎没有什么区别，只是<code>first</code>换成<code>last</code></li>
+<li>耗时只是在创建节点上，<code>Node&lt;E&gt;</code></li>
+</ul>
+<p><strong>对比</strong>：<code>ArrayList </code>更优</p>
+<h2 id="中间插"><a href="#中间插" class="headerlink" title="中间插"></a>中间插</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081346021.png" srcset="/img/loading.gif" lazyload alt="image-20220708134635927"></p>
+<ol>
+<li><code>ArrayList</code>中间插入，首先我们知道他的定位时间复杂度是O(1)，比较耗时的点在于数据迁移和容量不足时候的扩容</li>
+<li><code>LinkedList</code>中间插入，链表的数据实际插入时候并不会怎么耗时，但是他定位的元素的时间复杂度是O(n)，所以这部分以及元素的实例化比较耗时</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 插入元素</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(<span class="hljs-type">int</span> index, E element)</span> &#123;<br>    checkPositionIndex(index);<br><br>    <span class="hljs-keyword">if</span> (index == size)<br>        linkLast(element);<br>    <span class="hljs-keyword">else</span><br>        linkBefore(element, node(index));<br>&#125;<br><br><span class="hljs-comment">// 定位元素</span><br>Node&lt;E&gt; <span class="hljs-title function_">node</span><span class="hljs-params">(<span class="hljs-type">int</span> index)</span> &#123;<br>    <span class="hljs-comment">// assert isElementIndex(index);</span><br><br>    <span class="hljs-keyword">if</span> (index &lt; (size &gt;&gt; <span class="hljs-number">1</span>)) &#123;<br>        Node&lt;E&gt; x = first;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; index; i++)<br>            x = x.next;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        Node&lt;E&gt; x = last;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> size - <span class="hljs-number">1</span>; i &gt; index; i--)<br>            x = x.prev;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 正式插入</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">linkBefore</span><span class="hljs-params">(E e, Node&lt;E&gt; succ)</span> &#123;<br>    <span class="hljs-comment">// assert succ != null;</span><br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; pred = succ.prev;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; newNode = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Node</span>&lt;&gt;(pred, e, succ);<br>    succ.prev = newNode;<br>    <span class="hljs-keyword">if</span> (pred == <span class="hljs-literal">null</span>)<br>        first = newNode;<br>    <span class="hljs-keyword">else</span><br>        pred.next = newNode;<br>    size++;<br>    modCount++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>找到指定位置插入的过程就比较简单了，与头插、尾插，相差不大</li>
+<li>整个过程可以看到，插入中比较耗时的点会在遍历寻找插入位置上</li>
+</ul>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081352539.png" srcset="/img/loading.gif" lazyload alt="image-20220708135241491"></p>
+<p>通过测试可以看到 <code>Linkedlist </code>在中间插入时，遍历寻找位置还是非常耗时了。所以不同的情况下，需要选择不同的 <code>List </code>集合做业务</p>
+<p><strong>对比</strong>：<code>ArrayList </code>更优</p>
+<h1 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h1><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207081355824.png" srcset="/img/loading.gif" lazyload alt="image-20220708135526764"></p>
+<p><strong>以<code>remove()</code>为例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Object o)</span> &#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-literal">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (x.item == <span class="hljs-literal">null</span>) &#123;<br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (Node&lt;E&gt; x = first; x != <span class="hljs-literal">null</span>; x = x.next) &#123;<br>            <span class="hljs-keyword">if</span> (o.equals(x.item)) &#123;<br>                unlink(x);<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br><span class="hljs-comment">// unlink(x)解链</span><br>E <span class="hljs-title function_">unlink</span><span class="hljs-params">(Node&lt;E&gt; x)</span> &#123;<br>    <span class="hljs-comment">// assert x != null;</span><br>    <span class="hljs-keyword">final</span> <span class="hljs-type">E</span> <span class="hljs-variable">element</span> <span class="hljs-operator">=</span> x.item;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; next = x.next;<br>    <span class="hljs-keyword">final</span> Node&lt;E&gt; prev = x.prev;<br><br>    <span class="hljs-keyword">if</span> (prev == <span class="hljs-literal">null</span>) &#123;<br>        first = next;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        prev.next = next;<br>        x.prev = <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (next == <span class="hljs-literal">null</span>) &#123;<br>        last = prev;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        next.prev = prev;<br>        x.next = <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    x.item = <span class="hljs-literal">null</span>;<br>    size--;<br>    modCount++;<br>    <span class="hljs-keyword">return</span> element;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">xx</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000000</span>; i++) &#123;<br>    list.add(i);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="普通for循环"><a href="#普通for循环" class="headerlink" title="普通for循环"></a>普通for循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test_LinkedList_for0</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; list.size(); i++) &#123;<br>        xx += list.get(i);<br>    &#125;<br>    System.out.println(<span class="hljs-string">&quot;耗时：&quot;</span> + (System.currentTimeMillis() - startTime));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="增强for循环"><a href="#增强for循环" class="headerlink" title="增强for循环"></a>增强for循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test_LinkedList_for1</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    <span class="hljs-keyword">for</span> (Integer itr : list) &#123;<br>        xx += itr;<br>    &#125;<br>    System.out.println(<span class="hljs-string">&quot;耗时：&quot;</span> + (System.currentTimeMillis() - startTime));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Iterator循环"><a href="#Iterator循环" class="headerlink" title="Iterator循环"></a>Iterator循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test_LinkedList_Iterator</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    Iterator&lt;Integer&gt; iterator = list.iterator();<br>    <span class="hljs-keyword">while</span> (iterator.hasNext()) &#123;<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">next</span> <span class="hljs-operator">=</span> iterator.next();<br>        xx += next;<br>    &#125;<br>    System.out.println(<span class="hljs-string">&quot;耗时：&quot;</span> + (System.currentTimeMillis() - startTime))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="forEach循环"><a href="#forEach循环" class="headerlink" title="forEach循环"></a>forEach循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test_LinkedList_forEach</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    list.forEach(integer -&gt; &#123;<br>        xx += integer;<br>    &#125;);<br>    System.out.println(<span class="hljs-string">&quot;耗时：&quot;</span> + (System.currentTimeMillis() - startTime));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Stream流"><a href="#Stream流" class="headerlink" title="Stream流"></a>Stream流</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test_LinkedList_stream</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">startTime</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    list.stream().forEach(integer -&gt; &#123;<br>        xx += integer;<br>    &#125;);<br>    System.out.println(<span class="hljs-string">&quot;耗时：&quot;</span> + (System.currentTimeMillis() - startTime));<br>&#125;<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%BA%90%E7%A0%81/" class="category-chain-item">源码</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%BA%90%E7%A0%81/">#源码</a>
+      
+        <a href="/tags/ArrayList/">#ArrayList</a>
+      
+        <a href="/tags/LinkedList/">#LinkedList</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LinkedList、ArrayList插入分析</div>
+      <div>http://example.com/2022/07/08/2022-7-8-LinkedList、ArrayList插入分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chaoo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月8日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/10/2022-7-10-%20Spring%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Spring复习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spring复习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/08/2022-7-8-%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%E3%80%81%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E3%80%81%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/" title="双端队列、延迟队列、阻塞队列">
+                        <span class="hidden-mobile">双端队列、延迟队列、阻塞队列</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

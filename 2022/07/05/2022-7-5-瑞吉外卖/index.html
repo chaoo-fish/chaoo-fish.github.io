@@ -1,0 +1,826 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chaoo">
+  <meta name="keywords" content="Java, Blog">
+  
+    <meta name="description" content="瑞吉外卖的技术总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="瑞吉外卖的技术总结">
+<meta property="og:url" content="http://example.com/2022/07/05/2022-7-5-%E7%91%9E%E5%90%89%E5%A4%96%E5%8D%96/index.html">
+<meta property="og:site_name" content="随风">
+<meta property="og:description" content="瑞吉外卖的技术总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202206271443914.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207031527152.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207041419539.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207041542371.png">
+<meta property="article:published_time" content="2022-07-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-12T09:18:57.777Z">
+<meta property="article:author" content="Chaoo">
+<meta property="article:tag" content="项目">
+<meta property="article:tag" content="ssm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202206271443914.png">
+  
+  
+  
+  <title>瑞吉外卖的技术总结 - 随风</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chaoo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="瑞吉外卖的技术总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-05 00:00" pubdate>
+          2022年7月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          90 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">瑞吉外卖的技术总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="WebMVC"><a href="#WebMVC" class="headerlink" title="WebMVC"></a>WebMVC</h1><h2 id="消息转化器"><a href="#消息转化器" class="headerlink" title="消息转化器"></a>消息转化器</h2><blockquote>
+<p>将后端返回给前端的对象转换为json,对long数据转换,日期等</p>
+</blockquote>
+<p>使用Mapper文件夹替代Dao</p>
+<p>同时使用<code>@Mapper</code>注解而不是<code>@Repository</code>注解</p>
+<blockquote>
+<p>两者区别:</p>
+<p>@Repository是spring的注解,标记为一个bean,配合mybatis时需要配置@MapperScan</p>
+<p>@Mapper是Mybatis的注解,不需要额外的@MapperScan扫描</p>
+</blockquote>
+<h1 id="Mybatis-Plus"><a href="#Mybatis-Plus" class="headerlink" title="Mybatis-Plus"></a>Mybatis-Plus</h1><h2 id="LambdaQueryWrapper"><a href="#LambdaQueryWrapper" class="headerlink" title="LambdaQueryWrapper"></a>LambdaQueryWrapper</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">LambdaQueryWrapper&lt;Employee&gt; queryWrapper = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LambdaQueryWrapper</span>&lt;&gt;();<br>queryWrapper.eq(Employee::getName,employee.getUsername());<br><span class="hljs-type">Employee</span> <span class="hljs-variable">emp</span> <span class="hljs-operator">=</span> employeeService.getOne(queryWrapper);<br></code></pre></td></tr></table></figure>
+
+<h2 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a>分页插件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 配置MP的分页插件</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MybatisPlusConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MybatisPlusInterceptor <span class="hljs-title function_">mybatisPlusInterceptor</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-type">MybatisPlusInterceptor</span> <span class="hljs-variable">mybatisPlusInterceptor</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MybatisPlusInterceptor</span>();<br>        mybatisPlusInterceptor.addInnerInterceptor(<span class="hljs-keyword">new</span> <span class="hljs-title class_">PaginationInnerInterceptor</span>());<br>        <span class="hljs-keyword">return</span> mybatisPlusInterceptor;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 员工信息分页查询</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> page</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> pageSize</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> name</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(&quot;/page&quot;)</span><br><span class="hljs-keyword">public</span> R&lt;Page&gt; <span class="hljs-title function_">page</span><span class="hljs-params">(<span class="hljs-type">int</span> page, <span class="hljs-type">int</span> pageSize, String name)</span>&#123;<br>    log.info(<span class="hljs-string">&quot;page = &#123;&#125;,pageSize = &#123;&#125;,name = &#123;&#125;&quot;</span>,page,pageSize,name);<br><br>    <span class="hljs-comment">// 构造分页构造器</span><br>    <span class="hljs-type">Page</span> <span class="hljs-variable">pageInfo</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Page</span>(page,pageSize);<br><br>    <span class="hljs-comment">// 构造条件构造器</span><br>    LambdaQueryWrapper&lt;Employee&gt; queryWrapper = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LambdaQueryWrapper</span>();<br>    <span class="hljs-comment">// 添加过滤条件</span><br>    queryWrapper.like(StringUtils.isNotEmpty(name),Employee::getName,name);<br>    <span class="hljs-comment">// 添加排序条件</span><br>    queryWrapper.orderByDesc(Employee::getUpdateTime);<br><br>    <span class="hljs-comment">// 执行查询</span><br>    employeeService.page(pageInfo,queryWrapper); <span class="hljs-comment">// 不需要返回,传进去就构造好了</span><br>    <span class="hljs-keyword">return</span> R.success(pageInfo);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>前端</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">getMemberList</span> (params) &#123;<br>  <span class="hljs-keyword">return</span> $axios(&#123;<br>    <span class="hljs-attr">url</span>: <span class="hljs-string">&#x27;/employee/page&#x27;</span>,<br>    <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;get&#x27;</span>,<br>    params<br>  &#125;)<br>&#125;<br><br>不过在前端有个拦截器<br>会将传过去的路劲改变<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="公共字段自动填充"><a href="#公共字段自动填充" class="headerlink" title="公共字段自动填充"></a>公共字段自动填充</h2><p>在实体类属性上加注解<code>@TableField</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@TableField(fill = FieldFill.INSERT)</span> <span class="hljs-comment">// 插入时填充字段</span><br><span class="hljs-keyword">private</span> LocalDateTime createTime;<br><br><span class="hljs-meta">@TableField(fill = FieldFill.INSERT_UPDATE)</span> <span class="hljs-comment">// 插入和更新时填充字段</span><br><span class="hljs-keyword">private</span> LocalDateTime updateTime;<br><br><span class="hljs-meta">@TableField(fill = FieldFill.INSERT)</span><br><span class="hljs-keyword">private</span> Long createUser;<br><br><span class="hljs-meta">@TableField(fill = FieldFill.INSERT_UPDATE)</span><br><span class="hljs-keyword">private</span> Long updateUser;<br></code></pre></td></tr></table></figure>
+
+<p>创建<strong>MyMetaObjectHandler</strong>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyMetaObjectHandler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">MetaObjectHandler</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">insertFill</span><span class="hljs-params">(MetaObject metaObject)</span> &#123;<br>        log.info(<span class="hljs-string">&quot;公共字段自动填充[insert]...&quot;</span>);<br>        log.info(metaObject.toString());<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">updateFill</span><span class="hljs-params">(MetaObject metaObject)</span> &#123;<br>        log.info(<span class="hljs-string">&quot;公共字段自动填充[update]...&quot;</span>);<br>        log.info(metaObject.toString());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用ThreadLocal进行完善</p>
+<hr>
+<h1 id="MD5加密"><a href="#MD5加密" class="headerlink" title="MD5加密"></a>MD5加密</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">employee.setPassword(DigestUtils.md5DigestAsHex(<span class="hljs-string">&quot;123456&quot;</span>.getBytes()));<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="文件上传下载"><a href="#文件上传下载" class="headerlink" title="文件上传下载"></a>文件上传下载</h1><p>commons-fileupload</p>
+<p>commons-io</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 文件上传和下载</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/common&quot;)</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CommonController</span> &#123;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;reggie.path&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String basePath;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 文件上传</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> file</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@PostMapping(&quot;/upload&quot;)</span><br>    <span class="hljs-keyword">public</span> R&lt;String&gt; <span class="hljs-title function_">upload</span><span class="hljs-params">(MultipartFile file)</span> &#123; <span class="hljs-comment">// 参数名字和前端的名字一致</span><br>        log.info(file.toString());<br><br>        <span class="hljs-comment">// 原始文件名</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">originalFilename</span> <span class="hljs-operator">=</span> file.getOriginalFilename();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">suffix</span> <span class="hljs-operator">=</span> originalFilename.substring(originalFilename.lastIndexOf(<span class="hljs-string">&quot;.&quot;</span>));<br><br>        <span class="hljs-comment">// 使用UUID重新生成文件名,防止文件名重复造成文件覆盖</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">fileName</span> <span class="hljs-operator">=</span> UUID.randomUUID().toString() + suffix;<br><br>        <span class="hljs-comment">// 创建一个目录对象</span><br>        <span class="hljs-type">File</span> <span class="hljs-variable">dir</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(basePath);<br>        <span class="hljs-comment">// 判断当前目录是否存在</span><br>        <span class="hljs-keyword">if</span> (!dir.exists()) &#123;<br>            <span class="hljs-comment">// 目录不存在,需要创建</span><br>            dir.mkdirs();<br>        &#125;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            file.transferTo(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(basePath + fileName));<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> R.success(fileName);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 文件下载</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> name</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> response</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@GetMapping(&quot;/download&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">download</span><span class="hljs-params">(String name, HttpServletResponse response)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 输入流,通过出入刘读取文件内容</span><br>            <span class="hljs-type">FileInputStream</span> <span class="hljs-variable">fileInputStream</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(basePath + name));<br><br>            <span class="hljs-comment">// 输出流,通过输出流将文件写回浏览器,在浏览器展示图片了</span><br>            <span class="hljs-type">ServletOutputStream</span> <span class="hljs-variable">outputStream</span> <span class="hljs-operator">=</span> response.getOutputStream();<br>            response.setContentType(<span class="hljs-string">&quot;image/jpeg&quot;</span>);<br>            <span class="hljs-type">int</span> <span class="hljs-variable">len</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>            <span class="hljs-type">byte</span>[] bytes = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">1024</span>];<br>            <span class="hljs-keyword">while</span> ((len = fileInputStream.read(bytes)) != -<span class="hljs-number">1</span>) &#123;<br>                outputStream.write(bytes,<span class="hljs-number">0</span>,len);<br>                outputStream.flush();<br>            &#125;<br><br>            <span class="hljs-comment">// 关闭资源</span><br>            outputStream.close();<br>            fileInputStream.close();<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="关闭8080端口"><a href="#关闭8080端口" class="headerlink" title="关闭8080端口"></a>关闭8080端口</h1><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202206271443914.png" srcset="/img/loading.gif" lazyload alt="image-20220627144344849"></p>
+<h1 id="Spring-Cache"><a href="#Spring-Cache" class="headerlink" title="Spring Cache"></a>Spring Cache</h1><blockquote>
+<p>基于注解的缓存功能</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>@EnableCaching</th>
+<th>开启缓存注解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@cacheable</td>
+<td>查询缓存,将方法缓存值放入缓存池中</td>
+</tr>
+<tr>
+<td>@Cacheput</td>
+<td>插入缓存</td>
+</tr>
+<tr>
+<td>@CacheEvict</td>
+<td>删除缓存</td>
+</tr>
+</tbody></table>
+<p><strong>导坐标</strong></p>
+<p>只是使用基础功能(基于Mysql),不需要导包,已经存在于<code>spring-context</code>中了</p>
+<p><strong>扩展坐标</strong></p>
+<p><code>Spring-cache</code>坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-cache<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>redis</code>坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>配置redis<code>application.yml</code></strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">cache:</span><br>    <span class="hljs-attr">redis:</span><br>      <span class="hljs-attr">time-to-live:</span> <span class="hljs-number">180000</span> <span class="hljs-comment">#设置缓存有效期</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>开启缓存注解功能</strong></p>
+<p>在启动类上加<code>@EnableCaching</code>开启</p>
+<h1 id="Mysql主从复制"><a href="#Mysql主从复制" class="headerlink" title="Mysql主从复制"></a>Mysql主从复制</h1><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207031527152.png" srcset="/img/loading.gif" lazyload alt="image-20220703152704036"></p>
+<p><strong>主库Master</strong></p>
+<p>第一步修改Msyql配置文件 <code>/etc/my.cnf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cnf">[mysqld]<br>server_id=100 ## 设置server_id,同一局域网中需要唯一ID<br>log-bin=mysql-bin ## 开启二进制日志功能,以备Slave作为其它数据库实例的Master时使用<br></code></pre></td></tr></table></figure>
+
+<p>开启远程权限</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">grant</span> <span class="hljs-keyword">replication</span> slave <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;xiaoming&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;root@123456&#x27;</span>;<br><br># 更改密码策略<br><span class="hljs-keyword">set</span> <span class="hljs-keyword">global</span> validate_password_policy=<span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">show <span class="hljs-keyword">master</span> <span class="hljs-title">status</span>;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>从库Slave</strong></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mysqld]</span><br><span class="hljs-attr">server_id</span>=<span class="hljs-number">101</span> <span class="hljs-comment">## 设置server_id,同一局域网中需要唯一ID</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">change master <span class="hljs-keyword">to</span><br>    <span class="hljs-attribute">MASTER_HOST</span>=<span class="hljs-string">&#x27;192.168.33.131&#x27;</span>,<br>    <span class="hljs-attribute">MASTER_USER</span>=<span class="hljs-string">&#x27;xiaoming&#x27;</span>,<br>    <span class="hljs-attribute">MASTER_PASSWORD</span>=<span class="hljs-string">&#x27;root@123456&#x27;</span>,<br>    <span class="hljs-attribute">MASTER_LOG_FILE</span>=<span class="hljs-string">&#x27;mysql-bin.000001&#x27;</span>,<br>    <span class="hljs-attribute">MASTER_LOG_POS</span>=1833;<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-comment"># 启动从库同步开关</span><br><span class="hljs-literal">start</span> <span class="hljs-literal">slave</span>;<br><span class="hljs-literal">stop</span> <span class="hljs-literal">slave</span> <span class="hljs-comment"># 停止</span><br>    <br><span class="hljs-comment"># 检查状态</span><br>show <span class="hljs-literal">slave</span> status\G<br>    <br> <br><span class="hljs-comment"># 需要下面全部变成yes</span><br>Slave_IO_Running: YES <span class="hljs-comment"># 没变是因为UUID</span><br>Slave_SQL_Running: YES<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46049759/article/details/116779743">参考个人博客</a></p>
+<h1 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h1><p><strong>导包</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.shardingsphere<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>sharding-jdbc-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.0.0-RC1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>在配置文件中配置读写分离规则</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-comment"># 应用名称</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">reggie_take_out</span><br>  <span class="hljs-attr">shardingsphere:</span><br>    <span class="hljs-attr">datasource:</span><br>      <span class="hljs-attr">names:</span><br>        <span class="hljs-string">master,slave</span><br>      <span class="hljs-comment"># 主数据源</span><br>      <span class="hljs-attr">master:</span><br>        <span class="hljs-attr">type:</span> <span class="hljs-string">com.alibaba.druid.pool.DruidDataSource</span><br>        <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.mysql.cj.jdbc.Driver</span><br>        <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:mysql://192.168.33.131:3306/reggie?characterEncoding=utf-8</span><br>        <span class="hljs-attr">username:</span> <span class="hljs-string">root</span><br>        <span class="hljs-attr">password:</span> <span class="hljs-string">root</span><br>      <span class="hljs-comment"># 从数据源</span><br>      <span class="hljs-attr">slave:</span><br>        <span class="hljs-attr">type:</span> <span class="hljs-string">com.alibaba.druid.pool.DruidDataSource</span><br>        <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.mysql.cj.jdbc.Driver</span><br>        <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:mysql://192.168.3.132:3306/reggie?characterEncoding=utf-8</span><br>        <span class="hljs-attr">username:</span> <span class="hljs-string">root</span><br>        <span class="hljs-attr">password:</span> <span class="hljs-string">root</span><br>    <span class="hljs-attr">masterslave:</span><br>      <span class="hljs-comment"># 读写分离配置</span><br>      <span class="hljs-attr">load-balance-algorithm-type:</span> <span class="hljs-string">round_robin</span> <span class="hljs-comment">#轮询</span><br>      <span class="hljs-comment"># 最终的数据源名称</span><br>      <span class="hljs-attr">name:</span> <span class="hljs-string">dataSource</span><br>      <span class="hljs-comment"># 主库数据源名称</span><br>      <span class="hljs-attr">master-data-source-name:</span> <span class="hljs-string">master</span><br>      <span class="hljs-comment"># 从库数据源名称列表,多个逗号分隔</span><br>      <span class="hljs-attr">slave-data-source-names:</span> <span class="hljs-string">slave</span><br>    <span class="hljs-attr">props:</span><br>      <span class="hljs-attr">sql:</span><br>        <span class="hljs-attr">show:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#开启SQL显示,默认false</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>在配置文件汇总配置被允许bean定义覆盖配置项</strong></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">spring:</span><br>    <span class="hljs-attr">main:</span><br>        <span class="hljs-attr">allow-bean-definition-overriding:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<hr>
+<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>轻量web服务器,反向代理服务器,邮件代理服务器,占有内存小,并发能力强<br><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+<p>本文基于<code>Centos7</code>去安装</p>
+</blockquote>
+<p><strong>安装依赖包</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装gcc 如果没有yum源,可以参考下面博客链接去配置</span><br>apt-get install yum<br><br>yum install --nogpgcheck  gcc pcre-devel zlib-devel openssl openssl-devel<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>下载Nginx安装包</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装wget</span><br>apt-get install wget<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">下载nginx</span><br>wget http://nginx.org/download/nginx-1.16.1.tar.gz<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">解压文件</span><br>tar -zxvf nginx-1.16.1.tar.gz -C /soft<br></code></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">进入解压目录/soft  创建安装文件夹nginx  然后在安装</span><br>./configure --prefix=/usr/local/nginx<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs shell">=====出现下面信息代表初步安装检查完成=====<br>checking for PCRE JIT support ... found<br>checking for zlib library ... found<br>creating objs/Makefile<br><br>Configuration summary<br>  + using system PCRE library<br>  + OpenSSL library is not used<br>  + using system zlib library<br><br>  nginx path prefix: &quot;/usr/local/nginx&quot;<br>  nginx binary file: &quot;/usr/local/nginx/sbin/nginx&quot;<br>  nginx modules path: &quot;/usr/local/nginx/modules&quot;<br>  nginx configuration prefix: &quot;/usr/local/nginx/conf&quot;<br>  nginx configuration file: &quot;/usr/local/nginx/conf/nginx.conf&quot;<br>  nginx pid file: &quot;/usr/local/nginx/logs/nginx.pid&quot;<br>  nginx error log file: &quot;/usr/local/nginx/logs/error.log&quot;<br>  nginx http access log file: &quot;/usr/local/nginx/logs/access.log&quot;<br>  nginx http client request body temporary files: &quot;client_body_temp&quot;<br>  nginx http proxy temporary files: &quot;proxy_temp&quot;<br>  nginx http fastcgi temporary files: &quot;fastcgi_temp&quot;<br>  nginx http uwsgi temporary files: &quot;uwsgi_temp&quot;<br>  nginx http scgi temporary files: &quot;scgi_temp&quot;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">make &amp;&amp; make install<br>------真正安装完成<br>	|| mkdir -p &#x27;/usr/local/nginx/logs&#x27;<br>make[1]: Leaving directory `/root/nginx-1.16.1&#x27;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>报错1:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhoading/p/9938762.html">https://www.cnblogs.com/zhoading/p/9938762.html</a></p>
+<p><strong>查看版本</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost sbin]# ./nginx -v<br>nginx version: nginx/1.16.1<br></code></pre></td></tr></table></figure>
+
+<p><strong>开始前测试</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost sbin]# ./nginx -t<br>nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok<br>nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful<br></code></pre></td></tr></table></figure>
+
+<p><strong>启动和停止</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">启动</span><br>./nginx<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">停止</span><br>./nginx -s stop<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看进程</span><br>ps -ef | grep nginx<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">重写加载配置文件</span><br>./nginx -s reload<br>------------------------------------------------------------------------<br>root       8460      1  0 12:03 ?        00:00:00 nginx: master process ./nginx<br>nobody     8461   8460  0 12:03 ?        00:00:00 nginx: worker process<br>root       8616   8008  0 12:04 pts/0    00:00:00 grep --color=auto nginx<br>------------------------------------------------------------------------<br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">开/关防火墙</span><br>service firewalld restart 重启<br>service firewalld start 开启<br>service firewalld stop 关闭<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207041419539.png" srcset="/img/loading.gif" lazyload alt="image-20220704141950432"></p>
+<h2 id="部署静态资源"><a href="#部署静态资源" class="headerlink" title="部署静态资源"></a>部署静态资源</h2><blockquote>
+<p>更为高效</p>
+</blockquote>
+<p><code>nginx.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">server &#123;<br>      listen       80;	# 监听端口<br>      server_name  localhost;	# 服务名称<br>      <br>      location / &#123;	# 匹配客户端请求url<br>          root   html;	# 指定静态资源根目录<br>          index  index.html;	# 指定默认首页<br>      &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p><code>nginx.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">server &#123;<br>      listen       82;	# 监听端口<br>      server_name  localhost;	# 服务名称<br>      <br>      location / &#123;	# 匹配客户端请求url<br>      	proxy_pass	http://192.168.138.101:8080; # 反向代理配置,将请求转发到指定服务<br>      &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207041542371.png" srcset="/img/loading.gif" lazyload alt="image-20220704154233304"></p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><blockquote>
+<p>基于反向代理实现</p>
+<p>轮询算法</p>
+</blockquote>
+<p><strong>配置负载均衡</strong></p>
+<p><code>nginx.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">upstream  targetserver &#123;	# upstream指令可以定义一组服务器<br>	server 192.168.138.101:8080;<br>	server 192.168.138.101:8081;<br>&#125;<br>server &#123;<br>       listen       80;  # 监听端口<br>       server_name  localhost;   # 服务名称<br>       location / &#123;  # 匹配客户端请求url<br>	       	proxy_pass	http://targetserver;<br>       &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>权重的配置方式</strong></p>
+<p><code>nginx.conf</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">upstream  targetserver &#123;	# upstream指令可以定义一组服务器<br>	server 192.168.138.101:8080 weight=10;<br>	server 192.168.138.101:8081 weight=5;<br>&#125;<br>server &#123;<br>       listen       80;  # 监听端口<br>       server_name  localhost;   # 服务名称<br>       location / &#123;  # 匹配客户端请求url<br>	       	proxy_pass	http://targetserver;<br>       &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h1><p><strong>导入knife4j的坐标</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.github.xiaoymin<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>knife4j-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>导入配置</strong></p>
+<p><code>WebMvcConfig.java</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@EnableSwagger2</span> <span class="hljs-comment">// Swagger</span><br><span class="hljs-meta">@EnableKnife4j</span> <span class="hljs-comment">// Knife4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebMvcConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebMvcConfigurationSupport</span> &#123;<br>    <br>    ......<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> Docket <span class="hljs-title function_">createRestApi</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 文档类型</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Docket</span>(DocumentationType.SWAGGER_2)<br>                .apiInfo(apiInfo())<br>                .select()<br>                .apis(RequestHandlerSelectors.basePackage(<span class="hljs-string">&quot;com.itheima.reggie.controller&quot;</span>))<br>                .paths(PathSelectors.any())<br>                .build();<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> ApiInfo <span class="hljs-title function_">apiInfo</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ApiInfoBuilder</span>()<br>                .title(<span class="hljs-string">&quot;瑞吉外卖&quot;</span>)<br>                .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br>                .description(<span class="hljs-string">&quot;瑞吉外卖接口文档&quot;</span>)<br>                .build();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>设置静态资源映射</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">registry.addResourceHandler(<span class="hljs-string">&quot;doc.html&quot;</span>).addResourceLocations(<span class="hljs-string">&quot;classpath:/META-INF/resources/&quot;</span>);<br>registry.addResourceHandler(<span class="hljs-string">&quot;/webjars/**&quot;</span>).addResourceLocations(<span class="hljs-string">&quot;classpath:/META-INF/resources/webjars/&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>设置<code>LoginCheckFilter</code></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 定义不需要处理的请求路径</span><br>String[] urls = <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;<br>        <br>    	......<br>            <br>        <span class="hljs-string">&quot;/doc.html&quot;</span>,<br>        <span class="hljs-string">&quot;/webjars/**&quot;</span>,<br>        <span class="hljs-string">&quot;/swagger-resources&quot;</span>,<br>        <span class="hljs-string">&quot;/v2/api-docs&quot;</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<hr>
+<h1 id="减商品"><a href="#减商品" class="headerlink" title="减商品"></a>减商品</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%91%9E%E5%90%89%E5%A4%96%E5%8D%96/" class="category-chain-item">瑞吉外卖</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%A1%B9%E7%9B%AE/">#项目</a>
+      
+        <a href="/tags/ssm/">#ssm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>瑞吉外卖的技术总结</div>
+      <div>http://example.com/2022/07/05/2022-7-5-瑞吉外卖/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chaoo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/06/2022-7-6-HashMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/" title="HashMap源码分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HashMap源码分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
