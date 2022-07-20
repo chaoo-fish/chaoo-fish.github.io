@@ -36,6 +36,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/7321011854597a554c01e03d9a4b48bc.gif">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/00da9b875d152802422e3ae8964e6f84.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/e7e03ba50d8a65293f777a600d9fb97f.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207161715764.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/c62c948fb2bce64014ec6786f349333c.png">
 <meta property="article:published_time" content="2022-06-30T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-06-30T16:00:00.000Z">
@@ -234,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          11k 字
+          12k 字
         
       </span>
     
@@ -245,7 +246,7 @@
         
         
         
-          91 分钟
+          97 分钟
         
       </span>
     
@@ -594,12 +595,21 @@
 <h2 id="4-迷宫问题"><a href="#4-迷宫问题" class="headerlink" title="4.迷宫问题"></a>4.迷宫问题</h2><p>代码位置:<a target="_blank" rel="noopener" href="https://github.com/sanshisi/DS/blob/master/src/p2/%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84/LinkedList.java">LinkedList.java</a></p>
 <h2 id="5-N皇后问题"><a href="#5-N皇后问题" class="headerlink" title="5.N皇后问题"></a>5.N皇后问题</h2><p>代码位置:<a target="_blank" rel="noopener" href="https://github.com/sanshisi/DS/blob/master/src/p2/%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84/LinkedList.java">LinkedList.java</a></p>
 <h2 id="6-数独"><a href="#6-数独" class="headerlink" title="6.数独"></a>6.数独</h2><p>博客位置：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46049759/article/details/122628294">https://blog.csdn.net/weixin_46049759&#x2F;article&#x2F;details&#x2F;122628294</a></p>
-<h1 id="五、排序算法"><a href="#五、排序算法" class="headerlink" title="五、排序算法"></a>五、排序算法</h1><h2 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h2><blockquote>
+<h1 id="五、排序算法"><a href="#五、排序算法" class="headerlink" title="五、排序算法"></a>五、排序算法</h1><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207161715764.png" srcset="/img/loading.gif" lazyload alt="image-20220716171540636"></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">下列说明在正文相应章节均有更详细的描述。<br><br>※<span class="hljs-number">1</span>冒泡: 输入数组已排序时最好。<br>※<span class="hljs-number">2</span>选择: 时间复杂度与输入数组特点无关。<br>※<span class="hljs-number">3</span>插入: 输入数组已排序时最好。<br>※<span class="hljs-number">4</span>希尔: 复杂度取决于增量序列，两行分别为希尔增量，<br>    和Knuth增量的希尔排序。输入数组已排序时最好。<br>※<span class="hljs-number">5</span>归并: 所列复杂度为「自顶向下非原地」版本。<br>    自顶向下/自底向上，非原地/原地的时间空间复杂度见该归并排序一节。<br>※<span class="hljs-number">6</span>快速: 当输入数组有序，且总是选取第一个元素为主轴时，<br>    时间复杂度退化为<span class="hljs-constructor">O(<span class="hljs-params">n</span>^2)</span>。空间开销为递归深度。<br>※<span class="hljs-number">7</span>堆: 原地堆排序空间复杂度为<span class="hljs-constructor">O(1)</span>。输入数组所有数字相等时，<br>    时间复杂度为<span class="hljs-constructor">O(<span class="hljs-params">n</span>)</span>。<br>※<span class="hljs-number">8</span>计数: k是计数数组大小。应用稳定性优化则稳定，否则不稳定。<br>    朴素版本空间复杂度为<span class="hljs-constructor">O(<span class="hljs-params">k</span>)</span>，稳定性优化版本空间复杂度为<span class="hljs-constructor">O(<span class="hljs-params">n</span> + <span class="hljs-params">k</span>)</span>。<br>※<span class="hljs-number">9</span>基数: d是最大数位数，k是计数数组大小，处理负数时k=<span class="hljs-number">19</span>。<br>    采用稳定的计数排序则稳定，否则不稳定。<br>※<span class="hljs-number">10</span>桶: 稳定性取决于桶内排序是否稳定。空间取决于桶使用数组还是容器，<br>    若采用数组为<span class="hljs-constructor">O(<span class="hljs-params">kn</span>)</span>，容器则为<span class="hljs-constructor">O(<span class="hljs-params">n</span>)</span>。所有元素放入同一个桶时复杂度最大。<br>    最坏时间复杂度取决于采用哪种桶内排序算法。<br><br>稳定性: 存在稳定和非稳定版本时，视作「稳定」。<br><br>作者：yukiyama<br>链接：https:<span class="hljs-comment">//leetcode.cn/circle/discuss/eBo9UB/</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-冒泡排序"><a href="#1-冒泡排序" class="headerlink" title="1.冒泡排序"></a>1.冒泡排序</h2><blockquote>
 <p>遍历数组，两两比较，如果前一个数大于后一个数就交换两个数，每次循环都会找出最大的那个数</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; arr.length - <span class="hljs-number">1</span>; i++) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; arr.length - i - <span class="hljs-number">1</span>; j++) &#123;<br>        <span class="hljs-keyword">if</span> (arr[j] &gt; arr[j + <span class="hljs-number">1</span>]) &#123;<br>            swap(j, j + <span class="hljs-number">1</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>代码位置:<a target="_blank" rel="noopener" href="https://github.com/sanshisi/DS/blob/master/out/production/DS/p5/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/BubbleSort.class">BubbleSort.java</a></p>
+<p>在冒泡排序中可以优化的地方有两处：</p>
+<ol>
+<li>提前结束优化：如果某一轮未发生交换，说明排序已经完成，可以提前结束，具体实现可以增加一个 boolean 类型去记录</li>
+<li>边界优化：记录前一轮交换的最终位置，说明该位置之后的元素为已排序状态，下一轮的交换只需执行到该处</li>
+</ol>
 <h2 id="2-插入排序"><a href="#2-插入排序" class="headerlink" title="2.插入排序"></a>2.插入排序</h2><blockquote>
 <p>这个可以类似于小朋友排队，我们先默认第一个是有序的，然后开始将第二个小朋友依次和前面的小朋友进行比较，如果小于前面的就交换，大于就不动</p>
 </blockquote>
@@ -611,7 +621,9 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; arr.length - <span class="hljs-number">1</span>; i++) &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> i + <span class="hljs-number">1</span>; j &lt; arr.length; j++) &#123;<br>        <span class="hljs-keyword">if</span> (arr[i] &gt; arr[j]) &#123; <span class="hljs-comment">// 如果后面元素比当前元素更小，就进行交换</span><br>            swap(i, j);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>代码位置:<a target="_blank" rel="noopener" href="https://github.com/sanshisi/DS/blob/master/out/production/DS/p5/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/SelectionSort.class">SelectionSort.java</a></p>
+<p><strong>稳定性：不稳定</strong></p>
+<p>存在跨域交换。找到本轮次最小值之后，将其与本轮起始数字交换，此时若中间有与起始元素同值的元素，将打破稳定性。</p>
+<p>例:　7 7 2 。第一轮交换第一个7和2，则两个7位置关系改变。</p>
 <h2 id="4-希尔排序"><a href="#4-希尔排序" class="headerlink" title="4.希尔排序"></a>4.希尔排序</h2><blockquote>
 <p>插入排序的升级版，又叫<strong>缩小增量排序</strong></p>
 <p>9 8 7 6 5 4 3 2 4 0</p>
