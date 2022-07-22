@@ -278,7 +278,7 @@
                 <blockquote>
 <p>本文环境:CentOS7</p>
 </blockquote>
-<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h3 id="安装一些必要的系统工具"><a href="#安装一些必要的系统工具" class="headerlink" title="安装一些必要的系统工具"></a>安装一些必要的系统工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y yum-utils device-mapper-persistent-data lvm2<br></code></pre></td></tr></table></figure>
+<h1 id="安装Docker"><a href="#安装Docker" class="headerlink" title="安装Docker"></a>安装Docker</h1><h3 id="安装一些必要的系统工具"><a href="#安装一些必要的系统工具" class="headerlink" title="安装一些必要的系统工具"></a>安装一些必要的系统工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install -y yum-utils device-mapper-persistent-data lvm2<br></code></pre></td></tr></table></figure>
 
 <h3 id="添加软件源信息"><a href="#添加软件源信息" class="headerlink" title="添加软件源信息"></a>添加软件源信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># docker 官方源</span><br>yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo<br><span class="hljs-comment"># 阿里云源</span><br>yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo<br></code></pre></td></tr></table></figure>
 
@@ -326,7 +326,8 @@
 
 <h2 id="准备-redis-的配置文件"><a href="#准备-redis-的配置文件" class="headerlink" title="准备 redis 的配置文件"></a>准备 redis 的配置文件</h2><p>redis中文官方网站:<a target="_blank" rel="noopener" href="http://www.redis.cn/download.html">http://www.redis.cn/download.html</a></p>
 <p>下载下来后解压，找到 <code>redis.conf</code> 文件</p>
-<h2 id="配置-redis-conf-配置文件"><a href="#配置-redis-conf-配置文件" class="headerlink" title="配置 redis.conf 配置文件"></a>配置 redis.conf 配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">bind</span> 127.0.0.1 	<span class="hljs-comment">#注释掉这部分，使redis可以外部访问</span><br>protected-mode no  <span class="hljs-comment">#修改保护模式为no</span><br>daemonize no		<span class="hljs-comment">#用守护线程的方式启动</span><br>requirepass 		<span class="hljs-comment">#给redis设置密码，默认没有密码</span><br>appendonly <span class="hljs-built_in">yes</span>		<span class="hljs-comment">#redis持久化　　默认是no</span><br>tcp-keepalive 300 	<span class="hljs-comment">#防止出现远程主机强迫关闭了一个现有的连接的错误 默认是300</span><br></code></pre></td></tr></table></figure>
+<h2 id="配置-redis-conf-配置文件"><a href="#配置-redis-conf-配置文件" class="headerlink" title="配置 redis.conf 配置文件"></a>配置 redis.conf 配置文件</h2><p>只需要改下面这些</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">bind</span> 127.0.0.1 	<span class="hljs-comment"># 注释掉这部分，使redis可以外部访问</span><br>protected-mode no   <span class="hljs-comment"># 修改保护模式为no</span><br>daemonize no		<span class="hljs-comment"># 用守护线程的方式启动</span><br>requirepass 		<span class="hljs-comment"># 给redis设置密码，默认没有密码</span><br>appendonly <span class="hljs-built_in">yes</span>		<span class="hljs-comment"># redis持久化　　默认是no</span><br>tcp-keepalive 300 	<span class="hljs-comment"># 防止出现远程主机强迫关闭了一个现有的连接的错误 默认是300</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="创建本地存放redis的位置"><a href="#创建本地存放redis的位置" class="headerlink" title="创建本地存放redis的位置"></a>创建本地存放redis的位置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#创建目录</span><br><span class="hljs-built_in">mkdir</span> /usr/local/redis<br><span class="hljs-built_in">mkdir</span> /usr/local/redis/conf<br></code></pre></td></tr></table></figure>
 
@@ -341,7 +342,7 @@
 
 <h2 id="设置Redis容器自动启动"><a href="#设置Redis容器自动启动" class="headerlink" title="设置Redis容器自动启动"></a>设置Redis容器自动启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker update redis --restart=always<br></code></pre></td></tr></table></figure>
 
-
+<h2 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it redis-test /bin/bash<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -434,6 +435,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/07/21/2022-7-21-Redis%E6%80%BB%E7%BB%93/" title="Redis的基本使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redis的基本使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
