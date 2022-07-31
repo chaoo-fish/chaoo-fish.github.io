@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          60 字
+          5.5k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          1 分钟
+          46 分钟
         
       </span>
     
@@ -273,7 +273,46 @@
             
               <div class="markdown-body">
                 
-                <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="Linux中卸载Redis"><a href="#Linux中卸载Redis" class="headerlink" title="Linux中卸载Redis"></a>Linux中卸载Redis</h2><p><a target="_blank" rel="noopener" href="http://www.muzhuangnet.com/show/71316.html">http://www.muzhuangnet.com/show/71316.html</a></p>
+                <h1 id="⏳软件问题解决"><a href="#⏳软件问题解决" class="headerlink" title="⏳软件问题解决"></a>⏳软件问题解决</h1><blockquote>
+<p>如果是要在浏览器上进行操作和验证，那么可以换个浏览器或者清空缓存，涉及密码注意<code>http</code>和<code>https</code></p>
+</blockquote>
+<ol>
+<li>百度&#x2F;CSDN(<code>10min</code>)</li>
+<li>Google(<code>10min</code>)</li>
+<li>重启电脑重复上面步骤</li>
+<li>重装软件</li>
+<li>重启电脑重装软件</li>
+</ol>
+<h1 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h1><h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="Linux下字符问题报错"><a href="#Linux下字符问题报错" class="headerlink" title="Linux下字符问题报错"></a>Linux下字符问题报错</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">-bash: ./shutdown.sh^M: No such file or directory<br></code></pre></td></tr></table></figure>
+
+<p>解决办法</p>
+<ol>
+<li>下载<code>dos2unix</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">yum install dos2unix <span class="hljs-comment"># 下载 dos2unix</span><br>dos2unix startup.sh <span class="hljs-comment"># 使用它进行格式化</span><br>====================================<br>[root@localhost bin]<span class="hljs-comment"># dos2unix shutdown.sh</span><br>dos2unix: converting file shutdown.sh to Unix format ...<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/jimbooks/article/details/98037922">https://blog.csdn.net/jimbooks/article/details/98037922</a></li>
+</ol>
+<h2 id="CentOS-7-could-not-retrieve-mirrorlist"><a href="#CentOS-7-could-not-retrieve-mirrorlist" class="headerlink" title="CentOS 7 could not retrieve mirrorlist"></a>CentOS 7 could not retrieve mirrorlist</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/shareye1992/article/details/88390994">https://blog.csdn.net/shareye1992/article/details/88390994</a></p>
+<h2 id="vim方向键和删除键出错"><a href="#vim方向键和删除键出错" class="headerlink" title="vim方向键和删除键出错"></a>vim方向键和删除键出错</h2><p>按删除不起作用，方向键是字母</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">vim /etc/vimrc.tiny<br><span class="hljs-comment"># 添加内容 </span><br><span class="hljs-built_in">set</span> nocompatible  <span class="hljs-comment"># 解决方向键</span><br><span class="hljs-built_in">set</span> backspace=2	  <span class="hljs-comment"># 解决空格键</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="Linux中卸载Redis"><a href="#Linux中卸载Redis" class="headerlink" title="Linux中卸载Redis"></a>Linux中卸载Redis</h2><p><a target="_blank" rel="noopener" href="http://www.muzhuangnet.com/show/71316.html">http://www.muzhuangnet.com/show/71316.html</a></p>
+<h1 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h1><h2 id="win系统下cmd方式运行报错"><a href="#win系统下cmd方式运行报错" class="headerlink" title="win系统下cmd方式运行报错"></a><strong>win系统下cmd方式运行报错</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">log4j:WARN No appenders could be found <span class="hljs-keyword">for</span> logger (org.apache.dubbo.common.logger.LoggerFactory).<br>log4j:WARN Please initialize the log4j system properly.<br>log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html<span class="hljs-comment">#noconfig for more info.</span><br>2022-07-25 09:51:09.172  INFO 12256 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)<br>2022-07-25 09:51:09.263  INFO 12256 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed <span class="hljs-keyword">in</span> 1742 ms<br>2022-07-25 09:51:09.372  WARN 12256 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name <span class="hljs-string">&#x27;routeServiceImpl&#x27;</span>: Unsatisfied dependency expressed through field <span class="hljs-string">&#x27;registry&#x27;</span>; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name <span class="hljs-string">&#x27;governanceConfiguration&#x27;</span> defined <span class="hljs-keyword">in</span> class path resource [org/apache/dubbo/admin/config/ConfigCenter.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.dubbo.admin.registry.config.GovernanceConfiguration]: Factory method <span class="hljs-string">&#x27;getDynamicConfiguration&#x27;</span> threw exception; nested exception is org.apache.dubbo.admin.common.exception.ConfigurationException: Either config center or registry address is needed, please refer to https://github.com/apache/incubator-dubbo-admin/wiki/Dubbo-Admin-configuration<br>2022-07-25 09:51:09.388  INFO 12256 --- [           main] ConditionEvaluationReportLoggingListener :<br><br>Error starting ApplicationContext. To display the conditions report re-run your application with <span class="hljs-string">&#x27;debug&#x27;</span> enabled.<br>2022-07-25 09:51:09.406 ERROR 12256 --- [           main] o.s.boot.SpringApplication               : Application run failed<br><br>org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name <span class="hljs-string">&#x27;routeServiceImpl&#x27;</span>: Unsatisfied dependency expressed through field <span class="hljs-string">&#x27;registry&#x27;</span>; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name <span class="hljs-string">&#x27;governanceConfiguration&#x27;</span> defined <span class="hljs-keyword">in</span> class path resource [org/apache/dubbo/admin/config/ConfigCenter.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.dubbo.admin.registry.config.GovernanceConfiguration]: Factory method <span class="hljs-string">&#x27;getDynamicConfiguration&#x27;</span> threw exception; nested exception is org.apache.dubbo.admin.common.exception.ConfigurationException: Either config center or registry address is needed, please refer to https://github.com/apache/incubator-dubbo-admin/wiki/Dubbo-Admin-configuration<br><br><br>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name <span class="hljs-string">&#x27;governanceConfiguration&#x27;</span> defined <span class="hljs-keyword">in</span> class path resource [org/apache/dubbo/admin/config/ConfigCenter.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.dubbo.admin.registry.config.GovernanceConfiguration]: Factory method <span class="hljs-string">&#x27;getDynamicConfiguration&#x27;</span> threw exception; nested exception is org.apache.dubbo.admin.common.exception.ConfigurationException: Either config center or registry address is needed, please refer to https://github.com/apache/incubator-dubbo-admin/wiki/Dubbo-Admin-configuration<br>        at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657)<br>        at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:485)<br>        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsin<br></code></pre></td></tr></table></figure>
+
+<p>😊解决方法</p>
+<p>去官网重新下一个，我感觉是本地的包出了问题</p>
+<h1 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h1><h2 id="事务消息中的事务监听器不起作用"><a href="#事务消息中的事务监听器不起作用" class="headerlink" title="事务消息中的事务监听器不起作用"></a>事务消息中的事务监听器不起作用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java">producer.setTransactionListener(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TransactionListener</span>() &#123;<br>    <span class="hljs-comment">// 在该方法中执行本地事务</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> LocalTransactionState <span class="hljs-title function_">executeLocalTransaction</span><span class="hljs-params">(Message msg, Object arg)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;hhhhhh&quot;</span>);<br>        <span class="hljs-keyword">if</span> (StringUtils.equals(<span class="hljs-string">&quot;TagA&quot;</span>, msg.getTags())) &#123;<br>            <span class="hljs-comment">// 提交</span><br>            System.out.println(<span class="hljs-string">&quot;AAA&quot;</span>);<br>            <span class="hljs-keyword">return</span> LocalTransactionState.COMMIT_MESSAGE;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (StringUtils.equals(<span class="hljs-string">&quot;TagB&quot;</span>, msg.getTags())) &#123;<br>            <span class="hljs-comment">// 回滚</span><br>            System.out.println(<span class="hljs-string">&quot;BBB&quot;</span>);<br>            <span class="hljs-keyword">return</span> LocalTransactionState.ROLLBACK_MESSAGE;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (StringUtils.equals(<span class="hljs-string">&quot;TagC&quot;</span>, msg.getTags()))&#123;<br>            System.out.println(<span class="hljs-string">&quot;CCC&quot;</span>);<br>            <span class="hljs-comment">// 未知</span><br>            <span class="hljs-keyword">return</span> LocalTransactionState.UNKNOW;<br>        &#125;<br>        <span class="hljs-keyword">return</span> LocalTransactionState.UNKNOW;<br>    &#125;<br>    <span class="hljs-comment">// 在该方法中执行 MQ 事务状态回查</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> LocalTransactionState <span class="hljs-title function_">checkLocalTransaction</span><span class="hljs-params">(MessageExt msg)</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;回查消息的Tag为:&quot;</span> + msg.getTags());<br>        <span class="hljs-keyword">return</span> LocalTransactionState.COMMIT_MESSAGE;<br>    &#125;<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>设置完事务监听后，实际上并没有执行事务</p>
+<p>解决：</p>
+<p>debug的时候好了，后面又重写运行并且等了一会，也会出来消息</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34709656/article/details/116701490">https://blog.csdn.net/qq_34709656/article/details/116701490</a></p>
 
                 
               </div>
@@ -361,6 +400,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/07/27/2022-7-27-ElasticSearch/" title="ElasticSearch">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ElasticSearch</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

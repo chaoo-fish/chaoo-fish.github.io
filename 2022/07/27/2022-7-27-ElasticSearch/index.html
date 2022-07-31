@@ -1,0 +1,748 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chaoo">
+  <meta name="keywords" content="Java, Blog">
+  
+    <meta name="description" content="ElasticSearch安装和使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElasticSearch">
+<meta property="og:url" content="http://example.com/2022/07/27/2022-7-27-ElasticSearch/index.html">
+<meta property="og:site_name" content="随风">
+<meta property="og:description" content="ElasticSearch安装和使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207271626753.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207271634305.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207291707698.png">
+<meta property="article:published_time" content="2022-07-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-26T16:00:00.000Z">
+<meta property="article:author" content="Chaoo">
+<meta property="article:tag" content="ElasticSearch">
+<meta property="article:tag" content="kibana">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207271626753.png">
+  
+  
+  
+  <title>ElasticSearch - 随风</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chaoo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ElasticSearch"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-07-27 00:00" pubdate>
+          2022年7月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ElasticSearch</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="概述⏳"><a href="#概述⏳" class="headerlink" title="概述⏳"></a>概述⏳</h1><p>倒排索引</p>
+<h1 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h1><h2 id="安装ES"><a href="#安装ES" class="headerlink" title="安装ES"></a>安装ES</h2><h3 id="下载软件"><a href="#下载软件" class="headerlink" title="下载软件"></a>下载软件</h3><p>Elasticsearch 的官方地址：<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/">https://www.elastic.co/cn/</a></p>
+<p>Elasticsearch 最新的版本是 8.3.2（截止 2022.7.25），我们选择 8.2.3 版本。之前版本下载地址</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207271626753.png" srcset="/img/loading.gif" lazyload alt="image-20220727162609652"></p>
+<h3 id="Windows单机"><a href="#Windows单机" class="headerlink" title="Windows单机"></a>Windows单机</h3><blockquote>
+<p>因为我是在centos7上面配置的，所以就不对windows的安装进行描述</p>
+</blockquote>
+<p>📃</p>
+<h3 id="Linux单机"><a href="#Linux单机" class="headerlink" title="Linux单机"></a>Linux单机</h3><blockquote>
+<p>安装一定要仔细</p>
+</blockquote>
+<p><strong>1.安装软件</strong></p>
+<p>将下载好的软件上传到服务器并执行如下命令解压</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">tar -zxvf elasticsearch-8.2.3-linux-x86_64.tar.gz -C /usr/local<br><span class="hljs-built_in">cd</span> /usr/local<br><span class="hljs-built_in">mv</span> elasticsearch-8.2.3 es<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.创建用户</strong></p>
+<p>因为安全问题，Elasticsearch 不允许 root 用户直接运行，所以要创建新用户，在 root 用 户中创建新用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">useradd es <span class="hljs-comment">#新增 es 用户</span><br>passwd es <span class="hljs-comment">#为 es 用户设置密码</span><br><br>userdel -r es <span class="hljs-comment">#如果错了，可以删除再加</span><br><br><br><span class="hljs-built_in">chown</span> -R es:es /usr/local/es <span class="hljs-comment">#文件夹所有者</span><br></code></pre></td></tr></table></figure>
+
+<p><code>chown -R es:es /usr/local/es #文件夹所有者</code>这个命令很重要，后面报错有可能还需要用到</p>
+<p><strong>3.修改配置</strong></p>
+<p>修改 &#x2F;usr&#x2F;local&#x2F;es&#x2F;config&#x2F;elasticsearch.yml 文件，添加如下内容：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">cluster.name:</span> <span class="hljs-string">elasticsearch</span><br><span class="hljs-attr">node.name:</span> <span class="hljs-string">node-1</span><br><span class="hljs-attr">network.host:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><br><span class="hljs-attr">http.port:</span> <span class="hljs-number">9200</span><br><span class="hljs-attr">cluster.initial_master_nodes:</span> [<span class="hljs-string">&quot;node-1&quot;</span>]<br></code></pre></td></tr></table></figure>
+
+<p>修改 &#x2F;etc&#x2F;security&#x2F;limits.conf，在文件末尾中增加下面内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 每个进程可以打开的文件数的限制</span><br>es soft nofile 65536<br>es hard nofile 65536<br></code></pre></td></tr></table></figure>
+
+<p>修改 &#x2F;etc&#x2F;security&#x2F;limits.d&#x2F;20-nproc.conf，在文件末尾中增加下面内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 每个进程可以打开的文件数的限制</span><br>es soft nofile 65536<br>es hard nofile 65536<br><span class="hljs-comment"># 操作系统级别对每个用户创建的进程数的限制</span><br>* hard <span class="hljs-built_in">nproc</span> 4096<br><span class="hljs-comment"># 注：* 带表 Linux 所有用户名称</span><br></code></pre></td></tr></table></figure>
+
+<p>修改 &#x2F;etc&#x2F;sysctl.conf，在文件中增加下面内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 一个进程可以拥有的 VMA(虚拟内存区域)的数量,默认值为 65536</span><br>vm.max_map_count=655360<br></code></pre></td></tr></table></figure>
+
+<p>修改 &#x2F;usr&#x2F;local&#x2F;es&#x2F;config&#x2F;jvm.options 方法，指定内存占用大小，默认是 4G，我们修改为 512M：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">-Xms512m<br>-Xmx512m<br></code></pre></td></tr></table></figure>
+
+<p>重新加载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sysctl -p<br></code></pre></td></tr></table></figure>
+
+<p><strong>4.启动软件</strong></p>
+<p>使用 ES 用户启动，由于 ES 不允许 root 用户直接使用，因此需要先切换到 es 用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">su es<br></code></pre></td></tr></table></figure>
+
+<p>然后再执行启动命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /usr/local/es/<br><span class="hljs-comment"># 启动 bin/elasticsearch</span><br><br><span class="hljs-comment"># 加了-d后是后台启动</span><br>bin/elasticsearch<br>bin/elasticsearch -d<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207271634305.png" srcset="/img/loading.gif" lazyload alt="image-20220727163415264"></p>
+<p>打开浏览器，输入 <a target="_blank" rel="noopener" href="https://192.168.33.137:9200/">https://192.168.33.137:9200</a> 后，输入上图中的用户名和密码，即可查看到如下信息：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;node-1&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;cluster_name&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;elasticsearch&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;cluster_uuid&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;KC4qlPfhT6KBU0k1CWBuQQ&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;version&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;number&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;8.2.3&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;build_flavor&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;default&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;build_type&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tar&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;build_hash&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9905bfb62a3f0b044948376b4f607f70a8a151b4&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;build_date&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2022-06-08T22:21:36.455508792Z&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;build_snapshot&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;lucene_version&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;9.1.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;minimum_wire_compatibility_version&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7.17.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;minimum_index_compatibility_version&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7.0.0&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;tagline&quot;</span> <span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;You Know, for Search&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：是HTTPS不是HTTP</p>
+<p>因为这个是有安全的链接，如果取消密码，那么就要用<code>http</code></p>
+</blockquote>
+<p>如果不想使用用户名密码和SSL，修改 conf&#x2F;elasticsearch.yml 文件，配置如下：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-comment"># Enable security features</span><br><span class="hljs-attr">xpack.security.enabled:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># 其实好像就改这一个为false也可以</span><br><span class="hljs-attr">xpack.security.enrollment.enabled:</span> <span class="hljs-literal">false</span><br><br><span class="hljs-comment"># Enable encryption for HTTP API client connections, such as Kibana, Logstash,and Agents</span><br><span class="hljs-attr">xpack.security.http.ssl:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">keystore.path:</span> <span class="hljs-string">certs/http.p12</span><br>    <br><span class="hljs-comment"># Enable encryption and mutual authentication between cluster nodes</span><br><span class="hljs-attr">xpack.security.transport.ssl:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">verification_mode:</span> <span class="hljs-string">certificate</span><br>    <span class="hljs-attr">keystore.path:</span> <span class="hljs-string">certs/transport.p12</span><br>    <span class="hljs-attr">truststore.path:</span> <span class="hljs-string">certs/transport.p12</span><br></code></pre></td></tr></table></figure>
+
+<p>原来都是true，这里都改成了false，前面是要求用户登录的，后面是要求SSL的，没必要，干掉。再次执行 bin&#x2F;elasticsearch 命令来启动后，就可以通过 <a target="_blank" rel="noopener" href="http://192.168.72.90:9200/">http://192.168.72.90:9200</a> 来直接访问了</p>
+<h3 id="Linux集群"><a href="#Linux集群" class="headerlink" title="Linux集群"></a>Linux集群</h3><p>待写</p>
+<p>📃</p>
+<h2 id="安装Kibana"><a href="#安装Kibana" class="headerlink" title="安装Kibana"></a>安装Kibana</h2><p>Kibana 是一个免费且开放的用户界面，能够让你对 Elasticsearch 数据进行可视化，并 让你在Elastic Stack 中进行导航。你可以进行各种操作，从跟踪查询负载，到理解请求如 何流经你的整个应用，都能轻松完成</p>
+<p>下载地址为：<a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/past-releases/kibana-8-2-3">https://www.elastic.co/cn/downloads/past-releases/kibana-8-2-3</a></p>
+<h3 id="解压安装"><a href="#解压安装" class="headerlink" title="解压安装"></a>解压安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 解压安装</span><br>tar -zxvf kibana-8.2.3-linux-x86_64.tar.gz -C /usr/local<br><span class="hljs-comment"># 切换目录</span><br><span class="hljs-built_in">cd</span> /usr/local<br><span class="hljs-comment"># 重新命名</span><br><span class="hljs-built_in">mv</span> kibana-8.2.3 kibana<br><span class="hljs-comment"># 进入目录</span><br><span class="hljs-built_in">cd</span> kibana<br></code></pre></td></tr></table></figure>
+
+<h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>修改 <code>config/kibana.yml</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 默认端口</span><br>server.port: 5601<br><span class="hljs-comment"># 主机地址</span><br>server.host: <span class="hljs-string">&quot;192.168.33.137&quot;</span><br><span class="hljs-comment"># ES 服务器的地址</span><br><span class="hljs-comment"># 如果关闭了那个验证服务就是http,否则就是https</span><br>elasticsearch.hosts: [<span class="hljs-string">&quot;http://192.168.33.137:9200&quot;</span>] <br><span class="hljs-comment"># 支持中文</span><br>i18n.locale: <span class="hljs-string">&quot;zh-CN&quot;</span><br>xpack.reporting.roles.enabled: <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># sh 在 linux 中是运行shell脚本的意思</span><br>sh bin/kibana<br></code></pre></td></tr></table></figure>
+
+<p>注意：Kibana 也不能使用 root 用户来启动，它的目录权限也需要赋给普通用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 切换root用户</span><br>su root<br><span class="hljs-comment"># 修改权限</span><br><span class="hljs-built_in">chown</span> -R es:es kibana<br><span class="hljs-comment"># 切换普通用户</span><br>su es<br></code></pre></td></tr></table></figure>
+
+<h3 id="验证服务"><a href="#验证服务" class="headerlink" title="验证服务"></a>验证服务</h3><p>启动成功后，在浏览器地址栏中输入：<a target="_blank" rel="noopener" href="http://192.168.33.137:5601/">http://192.168.33.137:5601</a> 进行访问操作</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207291707698.png" srcset="/img/loading.gif" lazyload alt="image-20220729170713495"></p>
+<h1 id="进阶⏳"><a href="#进阶⏳" class="headerlink" title="进阶⏳"></a>进阶⏳</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h2 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h2><h2 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h2><h2 id="分片原理"><a href="#分片原理" class="headerlink" title="分片原理"></a>分片原理</h2><h2 id="文档分析"><a href="#文档分析" class="headerlink" title="文档分析"></a>文档分析</h2><h2 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h2><h2 id="操作ES"><a href="#操作ES" class="headerlink" title="操作ES"></a>操作ES</h2><h3 id="映射属性"><a href="#映射属性" class="headerlink" title="映射属性"></a>映射属性</h3><p>这里使用到了 mapping 属性。mapping是对索引库中文档的约束，常见的mapping属性包括：</p>
+<ul>
+<li>type：字段数据类型，常见的简单类型有：<ul>
+<li>字符串：text（可分词的文本）、keyword（精确值，例如：品牌、国家、ip地址）</li>
+<li>数值：long、integer、short、byte、double、float、</li>
+<li>布尔：boolean</li>
+<li>日期：date</li>
+<li>对象：object</li>
+</ul>
+</li>
+<li>index：是否创建索引，默认为true</li>
+<li>analyzer：使用哪种分词器</li>
+<li>properties：该字段的子字段</li>
+</ul>
+<h3 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h3><p><strong>创建</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs php">PUT /索引库名称<br>&#123;<br>  <span class="hljs-string">&quot;mappings&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;properties&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;字段名&quot;</span> :&#123;<br>        <span class="hljs-string">&quot;type&quot;</span> : <span class="hljs-string">&quot;text&quot;</span>,<br>        <span class="hljs-string">&quot;analyzer&quot;</span>: <span class="hljs-string">&quot;ik_smart&quot;</span><br>      &#125;,<br>      <span class="hljs-string">&quot;字段名2&quot;</span> : &#123;<br>        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;text&quot;</span>,<br>        <span class="hljs-string">&quot;index&quot;</span>: <span class="hljs-literal">false</span><br>      &#125;,<br>      <span class="hljs-string">&quot;字段名3&quot;</span>:&#123;<br>        <span class="hljs-string">&quot;properties&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;子字段&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;keyword&quot;</span><br>          &#125;<br>        &#125;<br>      &#125;,<br>      <span class="hljs-comment">// ...略</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="文档操作"><a href="#文档操作" class="headerlink" title="文档操作"></a>文档操作</h3><h4 id="1-新增文档"><a href="#1-新增文档" class="headerlink" title="1.新增文档"></a>1.<strong>新增文档</strong></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs php">POST /索引库名/_doc/文档id<br>&#123;<br>    <span class="hljs-string">&quot;字段1&quot;</span>: <span class="hljs-string">&quot;值1&quot;</span>,<br>    <span class="hljs-string">&quot;字段2&quot;</span>: <span class="hljs-string">&quot;值2&quot;</span>,<br>    <span class="hljs-string">&quot;字段3&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;子属性1&quot;</span>: <span class="hljs-string">&quot;值3&quot;</span>,<br>        <span class="hljs-string">&quot;子属性2&quot;</span>: <span class="hljs-string">&quot;值4&quot;</span><br>    &#125;,<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-删除文档"><a href="#2-删除文档" class="headerlink" title="2.删除文档"></a><strong>2.删除文档</strong></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">DELETE /&#123;索引库名&#125;/_doc/id值<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-查询文档"><a href="#3-查询文档" class="headerlink" title="3.查询文档"></a>3.<strong>查询文档</strong></h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs php">GET /&#123;索引库名称&#125;/_doc/&#123;id&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-修改文档"><a href="#4-修改文档" class="headerlink" title="4.修改文档"></a>4.<strong>修改文档</strong></h4><p>修改文档有两种方式：</p>
+<ul>
+<li>全量修改：直接覆盖原来的文档</li>
+<li>增量修改：修改文档中的部分字段</li>
+</ul>
+<p><strong>全量修改</strong></p>
+<p>全量修改是覆盖原来的文档其本质是：</p>
+<ul>
+<li>根据指定的id删除文档</li>
+<li>新增一个相同id的文档</li>
+</ul>
+<blockquote>
+<p>注意：如果根据id删除时，id不存在，第二步的新增也会执行，也就从修改变成了新增操作了</p>
+</blockquote>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">PUT /&#123;索引库名&#125;/_doc/文档id<br>&#123;<br>    <span class="hljs-string">&quot;字段1&quot;</span>: <span class="hljs-string">&quot;值1&quot;</span>,<br>    <span class="hljs-string">&quot;字段2&quot;</span>: <span class="hljs-string">&quot;值2&quot;</span>,<br>    <span class="hljs-comment">// ... 略</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="高级查询⏳"><a href="#高级查询⏳" class="headerlink" title="高级查询⏳"></a>高级查询⏳</h3><p><strong>查询所有</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs php">GET /es-mq/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;match_all&quot;</span>: &#123;&#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个查询只能查出来10条</p>
+</blockquote>
+<h1 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h1><p>在springboot中使用elasticsearch</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ElasticsearchUtil</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> ElasticsearchClient elasticsearchClient;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 创建索引</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     *         索引名称</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 如果返回 True 表示创建成功</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> Boolean <span class="hljs-title function_">createIndex</span><span class="hljs-params">(String indexName)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ElasticsearchIndicesClient</span> <span class="hljs-variable">indices</span> <span class="hljs-operator">=</span> elasticsearchClient.indices();<br><br>            <span class="hljs-type">ExistsRequest</span> <span class="hljs-variable">existsRequest</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ExistsRequest</span>.Builder()<br>                    .index(indexName)<br>                    .build();<br>            <span class="hljs-type">Boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> indices.exists(existsRequest).value();<br>            <span class="hljs-keyword">if</span> (flag) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;你要创建的索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 已经存在,不能重复创建&quot;</span>);<br>            &#125;<br><br>            <span class="hljs-type">CreateIndexRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CreateIndexRequest</span>.Builder()<br>                    .index(indexName)<br>                    .build();<br>            <span class="hljs-type">CreateIndexResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> indices.create(request);<br>            <span class="hljs-keyword">return</span> response.acknowledged();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;创建索引出错,错误信息为:&quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 查询索引</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     *         索引名称</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 返回索引信息</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> IndexState <span class="hljs-title function_">getIndex</span><span class="hljs-params">(String indexName)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ElasticsearchIndicesClient</span> <span class="hljs-variable">indices</span> <span class="hljs-operator">=</span> elasticsearchClient.indices();<br>            <span class="hljs-type">GetIndexRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">GetIndexRequest</span>.Builder()<br>                    .index(indexName)<br>                    .build();<br>            <span class="hljs-type">GetIndexResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> indices.get(request);<br>            <span class="hljs-keyword">return</span> response.get(indexName);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;查询索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 删除索引</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">deleteIndex</span><span class="hljs-params">(String indexName)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">ElasticsearchIndicesClient</span> <span class="hljs-variable">indices</span> <span class="hljs-operator">=</span> elasticsearchClient.indices();<br>            <span class="hljs-type">DeleteIndexRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeleteIndexRequest</span>.Builder()<br>                    .index(indexName)<br>                    .build();<br>            <span class="hljs-type">DeleteIndexResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> indices.delete(request);<br>            <span class="hljs-keyword">return</span> response.acknowledged();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;删除索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 添加文档</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     *         索引名称</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> user</span><br><span class="hljs-comment">     *         添加文档数据</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">createDocument</span><span class="hljs-params">(String indexName, User user)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">// 创建 CreateRequest 对象 通过这个方法创建对象</span><br>            CreateRequest&lt;User&gt; request = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CreateRequest</span>.Builder&lt;User&gt;()<br>                    .id(user.getId().toString()) <span class="hljs-comment">// 文档标识 需要文艺</span><br>                    .index(indexName)<br>                    .document(user)<br>                    .build();<br>            <span class="hljs-type">CreateResponse</span> <span class="hljs-variable">respose</span> <span class="hljs-operator">=</span> elasticsearchClient.create(request);<br>            <span class="hljs-keyword">return</span> respose.result().jsonValue();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;添加文档,索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 批量添加文档</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> users</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">bulkCreatDocument</span><span class="hljs-params">(String indexName, List&lt;User&gt; users)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            ArrayList&lt;BulkOperation&gt; list = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>            <span class="hljs-keyword">for</span> (User user : users) &#123;<br>                CreateOperation&lt;User&gt; opt = <span class="hljs-keyword">new</span> <span class="hljs-title class_">CreateOperation</span>.Builder&lt;User&gt;()<br>                        .id(user.getId().toString())<br>                        .index(indexName)<br>                        .document(user)<br>                        .build();<br><br>                <span class="hljs-type">BulkOperation</span> <span class="hljs-variable">operation</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BulkOperation</span>.Builder()<br>                        .create(opt)<br>                        .build();<br>                list.add(operation);<br>            &#125;<br><br>            <span class="hljs-type">BulkRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BulkRequest</span>.Builder()<br>                    .operations(list)<br>                    .build();<br>            <span class="hljs-type">BulkResponse</span> <span class="hljs-variable">bulk</span> <span class="hljs-operator">=</span> elasticsearchClient.bulk(request);<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;批量添加文档 ,索引&quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 查询全部文档</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> clazz</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> &lt;T&gt; List&lt;Hit&lt;T&gt;&gt; <span class="hljs-title function_">searchDocument</span><span class="hljs-params">(String indexName, Class&lt;T&gt; clazz)</span> &#123;<br>        <span class="hljs-comment">/**</span><br><span class="hljs-comment">         * 这个地方我进行 matchAll 查询 默认 10 条 所以要进行 _search &#123; &quot;size&quot; : 20 &#125;查询</span><br><span class="hljs-comment">         */</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">MatchAllQuery</span> <span class="hljs-variable">matchAllQuery</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MatchAllQuery</span>.Builder().build();<br>            <span class="hljs-type">Query</span> <span class="hljs-variable">query</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Query</span>.Builder()<br>                    .matchAll(matchAllQuery)<br>                    .build();<br><br>            <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>.Builder()<br>                    .index(indexName)<br>                    .query(query)<br>                    .build();<br>            SearchResponse&lt;T&gt; response = elasticsearchClient.search(request, clazz);<br>            <span class="hljs-comment">// 真正的数据数量</span><br>            <span class="hljs-type">long</span> <span class="hljs-variable">size</span> <span class="hljs-operator">=</span> response.hits().total().value();<br>            <span class="hljs-comment">// 再次进行查询 通过数据大小</span><br>            request = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>.Builder()<br>                    .index(indexName)<br>                    .size((<span class="hljs-type">int</span>) size)<br>                    .build();<br>            response = elasticsearchClient.search(request, clazz);<br>            <span class="hljs-keyword">return</span> response.hits().hits();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;查询全部文档,索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br>        &#125;<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 查询指定文档</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> clazz</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> fieldName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> fieldValue</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> &lt;T&gt;</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> &lt;T&gt; List&lt;Hit&lt;T&gt;&gt; <span class="hljs-title function_">queryByIdDocument</span><span class="hljs-params">(String indexName, Class&lt;T&gt; clazz, String fieldName, Object fieldValue)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br><br>            <span class="hljs-type">MatchQuery</span> <span class="hljs-variable">matchQuery</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MatchQuery</span>.Builder()<br>                    .field(fieldName)<br>                    .query(fieldValue.toString())<br>                    .build();<br>            <span class="hljs-type">Query</span> <span class="hljs-variable">query</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Query</span>.Builder().match(matchQuery).build();<br><br>            <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>.Builder()<br>                    .index(indexName)<br>                    .query(query)<br>                    .build();<br>            SearchResponse&lt;T&gt; response = elasticsearchClient.search(request, clazz);<br>            <span class="hljs-keyword">return</span> response.hits().hits();<br><br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;查询单个文档,索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br><br>        &#125;<br>    &#125;<br><br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 删除指定文档</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> indexName</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> documentID</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">deleteDocument</span><span class="hljs-params">(String indexName, String documentID)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">DeleteRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeleteRequest</span>.Builder()<br>                    .index(indexName)<br>                    .id(documentID)<br>                    .build();<br>            <span class="hljs-type">DeleteResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> elasticsearchClient.delete(request);<br>            <span class="hljs-keyword">return</span> response.result().jsonValue();<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;删除指定文档,索引 &quot;</span> + indexName + <span class="hljs-string">&quot; 出错,出错信息为 &quot;</span> + e.getMessage());<br><br>        &#125;<br>    &#125;<br><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/ElasticSearch/" class="category-chain-item">ElasticSearch</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ElasticSearch/">#ElasticSearch</a>
+      
+        <a href="/tags/kibana/">#kibana</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ElasticSearch</div>
+      <div>http://example.com/2022/07/27/2022-7-27-ElasticSearch/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chaoo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年7月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/07/31/2022-7-31-ElasticSearch%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA/" title="ElasticSearch案例演示">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ElasticSearch案例演示</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/23/2022-7-23-%E6%8A%A5%E9%94%99%E6%80%BB%E7%BB%93/" title="报错文档">
+                        <span class="hidden-mobile">报错文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
