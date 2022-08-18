@@ -23,6 +23,9 @@
 <meta property="og:site_name" content="随风">
 <meta property="og:description" content="e家宜业报错总结">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171656815.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171657128.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171659138.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208121652838.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208120918577.png">
 <meta property="article:published_time" content="2022-08-09T16:00:00.000Z">
@@ -30,7 +33,7 @@
 <meta property="article:author" content="Chaoo">
 <meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208121652838.png">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171656815.png">
   
   
   
@@ -222,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          3.3k 字
         
       </span>
     
@@ -233,7 +236,7 @@
         
         
         
-          13 分钟
+          28 分钟
         
       </span>
     
@@ -284,7 +287,36 @@
 
 
 
-<h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>不会使用</p>
+<h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>会使用了</p>
+<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h2 id="不同模块中调用Service"><a href="#不同模块中调用Service" class="headerlink" title="不同模块中调用Service"></a>不同模块中调用Service</h2><p>需要在需要的模块增加包扫描</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication(</span><br><span class="hljs-meta">        scanBasePackages = &#123;&quot;com.chaoo.service.user&quot;,&quot;com.chaoo.service.basic&quot;&#125;</span><br><span class="hljs-meta">)</span><br><span class="hljs-meta">@MapperScan(&quot;com.chaoo.service.basic.mapper&quot;)</span><br><span class="hljs-meta">@EnableDiscoveryClient</span> <span class="hljs-comment">// 开启服务发现 nacos</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BasicApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(BasicApplication.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>补充：</strong></p>
+<p>问了朋友，用 openFeign 去远程调用</p>
+<h2 id="RequestBody接收数据报错"><a href="#RequestBody接收数据报错" class="headerlink" title="@RequestBody接收数据报错"></a>@RequestBody接收数据报错</h2><blockquote>
+<p>String只能接收JSON格式</p>
+</blockquote>
+<p>💢<strong>报错:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-number">2022</span>-08-<span class="hljs-number">17</span> <span class="hljs-number">16</span>:<span class="hljs-number">49</span>:<span class="hljs-number">36.262</span>  WARN <span class="hljs-number">11752</span> --- [nio-<span class="hljs-number">8300</span>-exec-<span class="hljs-number">1</span>] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.lang.String` from Array <span class="hljs-title function_">value</span> <span class="hljs-params">(token `JsonToken.START_ARRAY`)</span>; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `java.lang.String` from Array <span class="hljs-title function_">value</span> <span class="hljs-params">(token `JsonToken.START_ARRAY`)</span>&lt;EOL&gt; at [Source: (org.springframework.util.StreamUtils$NonClosingInputStream); line: <span class="hljs-number">1</span>, column: <span class="hljs-number">85</span>] (through reference chain: com.chaoo.service.basic.dto.NoticInfo[<span class="hljs-string">&quot;tpl_content&quot;</span>])]<br></code></pre></td></tr></table></figure>
+
+<p>✨<strong>解决:</strong></p>
+<p>控制层</p>
+<img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171656815.png" srcset="/img/loading.gif" lazyload alt="image-20220817165617646" style="zoom:67%;" />
+
+
+
+<p><code>NoticeInfo</code></p>
+<img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171657128.png" srcset="/img/loading.gif" lazyload alt="image-20220817165700083" style="zoom:67%;" />
+
+<p>前端给的数据：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;overview&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;published&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;oa_tpl_msg&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;tpl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;tpl_content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;content&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;p&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;data-we-empty-p&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-string">&quot;1&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;tag&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;br&quot;</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;attrs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;community_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;user_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;3&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>“content”: []</p>
+<p>代表的是数组，必须要用指定Array去接收</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45525367/article/details/120849876">https://blog.csdn.net/qq_45525367/article/details/120849876</a></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171659138.png" srcset="/img/loading.gif" lazyload alt="image-20220817165902089"></p>
 <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><h2 id="Boot导包错误"><a href="#Boot导包错误" class="headerlink" title="Boot导包错误"></a>Boot导包错误</h2><p>💢<strong>报错:</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">Invalid packaging <span class="hljs-keyword">for</span> parent POM org.springframework.boot:spring-boot-starter:<span class="hljs-number">2.7</span><span class="hljs-number">.1</span>, must be <span class="hljs-string">&quot;pom&quot;</span> but is <span class="hljs-string">&quot;jar&quot;</span><br></code></pre></td></tr></table></figure>
 
@@ -317,7 +349,7 @@
 <p>✨<strong>解决:</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// options.url = `/pc$&#123;options.url&#125;`;</span><br><span class="hljs-comment">// 地址拼接修改</span><br><span class="hljs-keyword">if</span>(!options.<span class="hljs-property">url</span>.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">&#x27;http://&#x27;</span>)) &#123;<br>    options.<span class="hljs-property">url</span> = <span class="hljs-string">`/pc<span class="hljs-subst">$&#123;options.url&#125;</span>`</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>评价这个链接时候应该使用反引号额，而不是单引号</p>
+<p>拼接这个链接时候应该使用反引号额，而不是单引号</p>
 <h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="没开远程链接"><a href="#没开远程链接" class="headerlink" title="没开远程链接"></a>没开远程链接</h2><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"><span class="hljs-number">2022</span>-<span class="hljs-number">08</span>-<span class="hljs-number">14</span> <span class="hljs-number">17</span>:<span class="hljs-number">52</span>:<span class="hljs-number">16.594</span> ERROR <span class="hljs-number">292</span> --- [nio-<span class="hljs-number">8200</span>-exec-<span class="hljs-number">1</span>] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() <span class="hljs-keyword">for</span> servlet [dispatcherServlet] <span class="hljs-keyword">in</span> context <span class="hljs-keyword">with</span> path [] threw exception [Request processing failed<span class="hljs-punctuation">;</span> <span class="hljs-keyword">nested</span> exception <span class="hljs-keyword">is</span> org.springframework.data.redis.RedisConnectionFailureException: Unable <span class="hljs-keyword">to</span> connect <span class="hljs-keyword">to</span> Redis<span class="hljs-punctuation">;</span> <span class="hljs-keyword">nested</span> exception <span class="hljs-keyword">is</span> org.springframework.data.redis.connection.PoolException: Could <span class="hljs-keyword">not</span> get a resource <span class="hljs-keyword">from</span> the pool<span class="hljs-punctuation">;</span> <span class="hljs-keyword">nested</span> exception <span class="hljs-keyword">is</span> io.lettuce.core.RedisConnectionException: Unable <span class="hljs-keyword">to</span> connect <span class="hljs-keyword">to</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">33.135</span>:<span class="hljs-number">6379</span>] <span class="hljs-keyword">with</span> root cause<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">vim</span> /etc/redis.<span class="hljs-keyword">conf</span><br><br>进去把 protercted-<span class="hljs-keyword">mode</span> 设为 <span class="hljs-keyword">no</span><br></code></pre></td></tr></table></figure>
