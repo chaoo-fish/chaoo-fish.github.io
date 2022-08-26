@@ -23,13 +23,11 @@
 <meta property="og:site_name" content="随风">
 <meta property="og:description" content="e家宜业总结">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208111117340.png">
 <meta property="article:published_time" content="2022-08-09T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-08-09T16:00:00.000Z">
 <meta property="article:author" content="Chaoo">
 <meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208111117340.png">
   
   
   
@@ -221,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.8k 字
+          1.6k 字
         
       </span>
     
@@ -232,7 +230,7 @@
         
         
         
-          66 分钟
+          14 分钟
         
       </span>
     
@@ -275,20 +273,37 @@
             
               <div class="markdown-body">
                 
-                <h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><p>父工程：  ejyy-openlab                    用于管理项目依赖<br>通用模块：   |— ejyy-common        通用模块父工程</p>
+                <p> Java版地址: <a target="_blank" rel="noopener" href="https://github.com/chaoo-fish/ejyy-chaoo">https://github.com/chaoo-fish/ejyy-chaoo</a></p>
+<p>项目原地址: <a target="_blank" rel="noopener" href="https://gitee.com/chowa/ejyy">https://gitee.com/chowa/ejyy</a> </p>
+<blockquote>
+<p> 截止8.20，该项目已初步完成部分模块</p>
+<blockquote>
+<p>宠物模块</p>
+</blockquote>
+<blockquote>
+<p>投诉模块</p>
+</blockquote>
+<blockquote>
+<p>通知模块</p>
+</blockquote>
+</blockquote>
+<p>项目结构</p>
+<p>父工程：  ejyy-openlab                    用于管理项目依赖<br>通用模块：   |— ejyy-common        通用模块父工程</p>
 <p>​                               |— ejyy-utils        用于编写通用工具类</p>
 <p>​                               |— ejyy-security          用于编写通用认证授权工具类</p>
 <p>网关模块：   |— ejyy-gateway         用于编写网关</p>
 <p>服务模块：   |— ejyy-service           服务模块父工程</p>
 <p>​                              |— ejyy-user         用户微服</p>
 <p>​                              |— ejyy-init           初始化微服</p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><blockquote>
-<p>目前使用的</p>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><blockquote>
+<p>目前使用的环境</p>
 </blockquote>
 <p>java 11</p>
 <p>maven 3.6.1</p>
 <p>mysql 5.7.14</p>
-<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><h3 id="项目依赖"><a href="#项目依赖" class="headerlink" title="项目依赖"></a>项目依赖</h3><ul>
+<p>Redis 6.2.7</p>
+<p>nacos 2.1.0</p>
+<h2 id="项目模块"><a href="#项目模块" class="headerlink" title="项目模块"></a>项目模块</h2><ul>
 <li><input checked="" disabled="" type="checkbox"> ejyy-openlab    </li>
 <li><input checked="" disabled="" type="checkbox"> ejyy-common<ul>
 <li><input checked="" disabled="" type="checkbox"> ejyy-utils</li>
@@ -299,225 +314,42 @@
 <li><input checked="" disabled="" type="checkbox"> ejyy-service<ul>
 <li><input checked="" disabled="" type="checkbox"> ejyy-user</li>
 <li><input checked="" disabled="" type="checkbox"> ejyy-init</li>
+<li><input checked="" disabled="" type="checkbox"> ejyy-basic</li>
 </ul>
 </li>
 </ul>
-<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>根据前端项目查找调用方法名、请求方式、所需要参数、模块名称，并填写如下表：</p>
-<table>
-<thead>
-<tr>
-<th>请求方式</th>
-<th>请求地址</th>
-<th>参数</th>
-<th>说明</th>
-<th>返回值</th>
-<th>对应表名</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>POST</td>
-<td>&#x2F;user&#x2F;account_login</td>
-<td>form: {     account: ‘’,     password: ‘’,     captcha: ‘’ }</td>
-<td>用户登录</td>
-<td>{     code: SUCCESS,     data: {         token,         userInfo: pcUserInfo,         postInfo     } }</td>
-<td>ejyy_property_company_user<br/>ejyy_property_company_access<br/>ejyy_wechat_official_accounts_user<br/>ejyy_property_company_auth</td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;user&#x2F;captcha</td>
-<td></td>
-<td>验证码</td>
-<td>{     code: SUCCESS,     data: {         img: 图片,         expire: config.session.maxAge     }</td>
-<td></td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;user&#x2F;state</td>
-<td></td>
-<td>用户状态</td>
-<td>{     code: SUCCESS,     data: {         state: ctx.session.state,         expire: config.session.maxAge     } }</td>
-<td></td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;user&#x2F;info</td>
-<td></td>
-<td></td>
-<td>{     code: SUCCESS,     data: {         userInfo: info,         postInfo     } }</td>
-<td></td>
-</tr>
-<tr>
-<td>POST</td>
-<td>&#x2F;user&#x2F;reset</td>
-<td>form: {     password: undefined}</td>
-<td>重置密码</td>
-<td>{     code: SUCCESS,     message: ‘重置登录密码成功’ }</td>
-<td>ejyy_property_company_user</td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;user&#x2F;logout</td>
-<td></td>
-<td>退出登录</td>
-<td>{     code: SUCCESS,     message: ‘账号已退出’ }</td>
-<td>ejyy_property_company_auth</td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;user&#x2F;info</td>
-<td></td>
-<td>用户信息</td>
-<td>{     code: SUCCESS,     data: {         userInfo: info,         postInfo     } }</td>
-<td>ejyy_property_company_user，ejyy_community_setting，ejyy_community_info，ejyy_property_company_user_access_community，</td>
-</tr>
-<tr>
-<td>GET</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>POST</td>
-<td>&#x2F;init&#x2F;run</td>
-<td>{     …profile,     …community,     province: community.address[0],     city: community.address[1],     district: community.address[2],     code,     state }</td>
-<td>用户信息初始化</td>
-<td>{     code: SUCCESS,     message: ‘系统初始化成功’ }</td>
-<td>ejyy_property_company_user，ejyy_community_info，ejyy_community_setting，ejyy_property_company_user_access_community，ejyy_property_company_auth</td>
-</tr>
-<tr>
-<td>GET</td>
-<td>&#x2F;init&#x2F;state</td>
-<td></td>
-<td></td>
-<td>{     code: SUCCESS,     data: {         state: ctx.session.initState,         expire: config.session.maxAge     } }</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h1 id="ejyy-init"><a href="#ejyy-init" class="headerlink" title="ejyy-init"></a>ejyy-init</h1><p>端口：8100</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8100</span><br></code></pre></td></tr></table></figure>
-
-
-
+<p>因为模块在一开始规划的时候出了点小问题，所以我将宠物、投诉及通知都写在了basic中</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>根据前端项目查找调用方法名、请求方式、所需要参数、模块名称</p>
 <blockquote>
-<p>初始化模块</p>
+<p>因为该项目是对原开源项目ejyy后端进行的Java版本的翻译</p>
 </blockquote>
-<h2 id="成员信息初始化"><a href="#成员信息初始化" class="headerlink" title="成员信息初始化"></a>成员信息初始化</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/init/</span>run<br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Controller</span><br><span class="hljs-meta">@RequestMapping(&quot;/init&quot;)</span><br><span class="hljs-meta">@CrossOrigin</span> <span class="hljs-comment">// 支持跨域</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InitController</span> &#123;<br>	...	<br>&#125;	<br></code></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h1 id="ejyy-user"><a href="#ejyy-user" class="headerlink" title="ejyy-user"></a>ejyy-user</h1><p>端口：8200</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>localhost:<span class="hljs-number">8200</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/user/</span>account_login<br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs pf">/<span class="hljs-keyword">user</span>/<span class="hljs-keyword">state</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h3 id="验证码"><a href="#验证码" class="headerlink" title="验证码"></a>验证码</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/user/</span>captcha<br></code></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h1><h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><h1 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h1><h2 id="正则查找和替换保留"><a href="#正则查找和替换保留" class="headerlink" title="正则查找和替换保留"></a>正则查找和替换保留</h2><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208111117340.png" srcset="/img/loading.gif" lazyload alt="image-20220811111707255" style="zoom:50%;" />
-
-<p>将<code>// aaa</code> 变成 <code>/* aaa */</code></p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> (.&#123;<span class="hljs-number">0</span>,<span class="hljs-number">100</span>&#125;)<br><br><span class="hljs-regexp">/* $1 */</span><br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="获取IP"><a href="#获取IP" class="headerlink" title="获取IP"></a>获取IP</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>javax.servlet<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>javax.servlet-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 从 HttpServletRequest 对象中获取IP地址的工具类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IPUtils</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">IP_UTILS_FLAG</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;,&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">UNKNOWN</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;unknown&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">LOCALHOST_IP</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;0:0:0:0:0:0:0:1&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">LOCALHOST_IP1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;127.0.0.1&quot;</span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 获取IP地址</span><br><span class="hljs-comment">     * &lt;p&gt;</span><br><span class="hljs-comment">     * 使用Nginx等反向代理软件，则不能通过request.getRemoteAddr()获取IP地址</span><br><span class="hljs-comment">     * 如果使用了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP地址，X-</span><br><span class="hljs-comment">     Forwarded-For中第一个非unknown的有效IP字符串，则为真实IP地址</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getIpAddr</span><span class="hljs-params">(HttpServletRequest request)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">ip</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//以下两个获取在k8s中，将真实的客户端IP，放到了x-Original-Forwarded-For。而将WAF的回源地址放到了 x -Forwarded - For了。</span><br>            ip = request.getHeader(<span class="hljs-string">&quot;X-Original-Forwarded-For&quot;</span>);<br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;X-Forwarded-For&quot;</span>);<br>            &#125;<br>            <span class="hljs-comment">//获取nginx等代理的ip</span><br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;x-forwarded-for&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;Proxy-Client-IP&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || ip.length() == <span class="hljs-number">0</span> ||<br>                    UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;WL-Proxy-Client-IP&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;HTTP_CLIENT_IP&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getHeader(<span class="hljs-string">&quot;HTTP_X_FORWARDED_FOR&quot;</span>);<br>            &#125;<br>            <span class="hljs-comment">//兼容k8s集群获取ip</span><br>            <span class="hljs-keyword">if</span> (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) &#123;<br>                ip = request.getRemoteAddr();<br>                <span class="hljs-keyword">if</span> (LOCALHOST_IP1.equalsIgnoreCase(ip) ||<br>                        LOCALHOST_IP.equalsIgnoreCase(ip)) &#123;<br>                    <span class="hljs-comment">//根据网卡取本机配置的IP</span><br>                    <span class="hljs-type">InetAddress</span> <span class="hljs-variable">iNet</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>                    <span class="hljs-keyword">try</span> &#123;<br>                        iNet = InetAddress.getLocalHost();<br>                    &#125; <span class="hljs-keyword">catch</span> (UnknownHostException e) &#123;<br>                        <span class="hljs-comment">//log.error(&quot;getClientIp error: &#123;&#125;&quot;, e);</span><br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e.getMessage());<br>                    &#125;<br>                    ip = iNet.getHostAddress();<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        <span class="hljs-comment">//e.printStackTrace();</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e.getMessage());<br>        &#125;<br>        <span class="hljs-comment">//使用代理，则获取第一个IP地址</span><br>        <span class="hljs-keyword">if</span> (!StringUtils.isEmpty(ip) &amp;&amp; ip.indexOf(IP_UTILS_FLAG) &gt; <span class="hljs-number">0</span>) &#123;<br>            ip = ip.substring(<span class="hljs-number">0</span>, ip.indexOf(IP_UTILS_FLAG));<br>        &#125;<br>        <span class="hljs-keyword">return</span> ip;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="身份证ID"><a href="#身份证ID" class="headerlink" title="身份证ID"></a>身份证ID</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 身份证号的工具类</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IDCardUtil</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 15位身份证号</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Integer</span> <span class="hljs-variable">FIFTEEN_ID_CARD</span> <span class="hljs-operator">=</span> <span class="hljs-number">15</span>;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 18位身份证号</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Integer</span> <span class="hljs-variable">EIGHTEEN_ID_CARD</span> <span class="hljs-operator">=</span> <span class="hljs-number">18</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">SimpleDateFormat</span> <span class="hljs-variable">format</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleDateFormat</span>(<span class="hljs-string">&quot;yyyy-MM-dd&quot;</span>);<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据身份证号获取性别</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> IDCard</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> true:男 false:女</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">getSex</span><span class="hljs-params">(String IDCard)</span> &#123;<br>        <span class="hljs-comment">// 默认为男</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">gender</span> <span class="hljs-operator">=</span> <span class="hljs-literal">true</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sex</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">if</span> (StringUtils.isNotBlank(IDCard)) &#123;<br>            <span class="hljs-comment">//15位身份证号</span><br>            <span class="hljs-keyword">if</span> (IDCard.length() == FIFTEEN_ID_CARD) &#123;<br>                <span class="hljs-keyword">if</span> (Integer.parseInt(IDCard.substring(<span class="hljs-number">14</span>, <span class="hljs-number">15</span>)) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) &#123;<br><span class="hljs-comment">//                    sex = &quot;女&quot;;</span><br>                    gender =<span class="hljs-literal">false</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br><span class="hljs-comment">//                    sex = &quot;男&quot;;</span><br>                    gender = <span class="hljs-literal">true</span>;<br>                &#125;<br>                <span class="hljs-comment">//18位身份证号</span><br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (IDCard.length() == EIGHTEEN_ID_CARD) &#123;<br>                <span class="hljs-comment">// 判断性别</span><br>                <span class="hljs-keyword">if</span> (Integer.parseInt(IDCard.substring(<span class="hljs-number">16</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)) % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) &#123;<br><span class="hljs-comment">//                    sex = &quot;女&quot;;</span><br>                    gender = <span class="hljs-literal">false</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br><span class="hljs-comment">//                    sex = &quot;男&quot;;</span><br>                    gender = <span class="hljs-literal">true</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> gender;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 根据身份证号获取年龄</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> IDCard</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Integer <span class="hljs-title function_">getAge</span><span class="hljs-params">(String IDCard)</span> &#123;<br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">age</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-type">Date</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();<br>        <span class="hljs-keyword">if</span> (StringUtils.isNotBlank(IDCard)) &#123;<br>            <span class="hljs-comment">//15位身份证号</span><br>            <span class="hljs-keyword">if</span> (IDCard.length() == FIFTEEN_ID_CARD) &#123;<br>                <span class="hljs-comment">// 身份证上的年份(15位身份证为1980年前的)</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">uyear</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;19&quot;</span> + IDCard.substring(<span class="hljs-number">6</span>, <span class="hljs-number">8</span>);<br>                <span class="hljs-comment">// 身份证上的月份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">uyue</span> <span class="hljs-operator">=</span> IDCard.substring(<span class="hljs-number">8</span>, <span class="hljs-number">10</span>);<br>                <span class="hljs-comment">// 当前年份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">fyear</span> <span class="hljs-operator">=</span> format.format(date).substring(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>);<br>                <span class="hljs-comment">// 当前月份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">fyue</span> <span class="hljs-operator">=</span> format.format(date).substring(<span class="hljs-number">5</span>, <span class="hljs-number">7</span>);<br>                <span class="hljs-keyword">if</span> (Integer.parseInt(uyue) &lt;= Integer.parseInt(fyue)) &#123;<br>                    age = Integer.parseInt(fyear) - Integer.parseInt(uyear) + <span class="hljs-number">1</span>;<br>                    <span class="hljs-comment">// 当前用户还没过生</span><br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    age = Integer.parseInt(fyear) - Integer.parseInt(uyear);<br>                &#125;<br>                <span class="hljs-comment">//18位身份证号</span><br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (IDCard.length() == EIGHTEEN_ID_CARD) &#123;<br>                <span class="hljs-comment">// 身份证上的年份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">year</span> <span class="hljs-operator">=</span> IDCard.substring(<span class="hljs-number">6</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>);<br>                <span class="hljs-comment">// 身份证上的月份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">yue</span> <span class="hljs-operator">=</span> IDCard.substring(<span class="hljs-number">10</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>);<br>                <span class="hljs-comment">// 当前年份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">fyear</span> <span class="hljs-operator">=</span> format.format(date).substring(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>);<br>                <span class="hljs-comment">// 当前月份</span><br>                <span class="hljs-type">String</span> <span class="hljs-variable">fyue</span> <span class="hljs-operator">=</span> format.format(date).substring(<span class="hljs-number">5</span>, <span class="hljs-number">7</span>);<br>                <span class="hljs-comment">// 当前月份大于用户出身的月份表示已过生日</span><br>                <span class="hljs-keyword">if</span> (Integer.parseInt(yue) &lt;= Integer.parseInt(fyue)) &#123;<br>                    age = Integer.parseInt(fyear) - Integer.parseInt(year) + <span class="hljs-number">1</span>;<br>                    <span class="hljs-comment">// 当前用户还没过生日</span><br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    age = Integer.parseInt(fyear) - Integer.parseInt(year);<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 获取出生日期  yyyy年MM月dd日</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> IDCard</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">getBirthday</span><span class="hljs-params">(String IDCard)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">birthday</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">year</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">month</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">day</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">if</span> (StringUtils.isNotBlank(IDCard)) &#123;<br>            <span class="hljs-comment">//15位身份证号</span><br>            <span class="hljs-keyword">if</span> (IDCard.length() == FIFTEEN_ID_CARD) &#123;<br>                <span class="hljs-comment">// 身份证上的年份(15位身份证为1980年前的)</span><br>                year = <span class="hljs-string">&quot;19&quot;</span> + IDCard.substring(<span class="hljs-number">6</span>, <span class="hljs-number">8</span>);<br>                <span class="hljs-comment">//身份证上的月份</span><br>                month = IDCard.substring(<span class="hljs-number">8</span>, <span class="hljs-number">10</span>);<br>                <span class="hljs-comment">//身份证上的日期</span><br>                day = IDCard.substring(<span class="hljs-number">10</span>, <span class="hljs-number">12</span>);<br>                <span class="hljs-comment">//18位身份证号</span><br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (IDCard.length() == EIGHTEEN_ID_CARD) &#123;<br>                <span class="hljs-comment">// 身份证上的年份</span><br>                year = IDCard.substring(<span class="hljs-number">6</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">4</span>);<br>                <span class="hljs-comment">// 身份证上的月份</span><br>                month = IDCard.substring(<span class="hljs-number">10</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>);<br>                <span class="hljs-comment">//身份证上的日期</span><br>                day = IDCard.substring(<span class="hljs-number">12</span>).substring(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>);<br>            &#125;<br>            birthday = year + <span class="hljs-string">&quot;年&quot;</span> + month + <span class="hljs-string">&quot;月&quot;</span> + day + <span class="hljs-string">&quot;日&quot;</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> birthday;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="屏蔽手机号中间4位"><a href="#屏蔽手机号中间4位" class="headerlink" title="屏蔽手机号中间4位"></a>屏蔽手机号中间4位</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 屏蔽手机号中间4位</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MaskPhone</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 屏蔽手机号中间4位</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> phone 手机号</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 返回屏蔽后的号码</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">mask</span><span class="hljs-params">(String phone)</span> &#123;<br>        <span class="hljs-keyword">return</span> phone.replaceAll(<span class="hljs-string">&quot;(\\d&#123;3&#125;)\\d&#123;4&#125;(\\d&#123;4&#125;)&quot;</span>,<span class="hljs-string">&quot;$1****$2&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>所以需要去修改原项目的前端请求，并将他启动即可</p>
+<p>例如：</p>
+<p>需要让<code>/user/init</code>指向我们的<code>http://localhost:8100/user/init</code></p>
+<blockquote>
+<p>这样做的目的其实是因为笔者不是很会vue，所以只能使用这样笨拙的方法去修改，当然，如果后端使用了网关，那么这样去改也许会轻松一些</p>
+</blockquote>
+<h1 id="ejyy-init"><a href="#ejyy-init" class="headerlink" title="ejyy-init"></a>ejyy-init</h1><p><strong>端口：8100</strong></p>
+<blockquote>
+<p>这个模块主要就是用于成员初始化</p>
+</blockquote>
+<h1 id="ejyy-user"><a href="#ejyy-user" class="headerlink" title="ejyy-user"></a>ejyy-user</h1><p><strong>端口：8200</strong></p>
+<blockquote>
+<p>该模块是用于用户登录</p>
+<blockquote>
+<p>token</p>
+</blockquote>
+</blockquote>
+<h1 id="ejyy-basic"><a href="#ejyy-basic" class="headerlink" title="ejyy-basic"></a>ejyy-basic</h1><p><strong>端口：8300</strong></p>
+<blockquote>
+<p>这个模块是我后面写宠物、投诉、通知</p>
+</blockquote>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p>只需要修改每个模块中yml文件中的各个服务的地址即可</p>
+<p><strong>注意：</strong>因为前端接受的数据大都是以下划线去接收的，所以我将 mybatis-plus 的默认驼峰改成不启用驼峰</p>
+<blockquote>
+<p>mybatis 的查询默认是将数据库中的字段名称由下换线转成驼峰，这点可以从 mybatis-plus 的源码看出</p>
+</blockquote>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8200</span><br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">user-server</span><br><br>  <span class="hljs-attr">datasource:</span><br>    <span class="hljs-attr">driver-class-name:</span> <span class="hljs-string">com.mysql.jdbc.Driver</span><br>    <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:mysql://192.168.33.135:3306/ejyy?useSSL=false&amp;characterEncoding=UTF8</span><br>    <span class="hljs-attr">username:</span> <span class="hljs-string">root</span><br>    <span class="hljs-attr">password:</span> <span class="hljs-string">root</span><br>  <span class="hljs-attr">redis:</span><br>    <span class="hljs-attr">host:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.33</span><span class="hljs-number">.135</span> <span class="hljs-comment"># redis 地址</span><br>    <span class="hljs-attr">port:</span> <span class="hljs-number">6379</span><br>    <span class="hljs-attr">database:</span> <span class="hljs-number">0</span><br>    <span class="hljs-attr">timeout:</span> <span class="hljs-number">18000000</span><br>    <span class="hljs-attr">lettuce:</span><br>      <span class="hljs-attr">pool:</span><br>        <span class="hljs-attr">max-active:</span> <span class="hljs-number">20</span><br>        <span class="hljs-attr">max-wait:</span> <span class="hljs-number">-1</span><br>        <span class="hljs-attr">max-idle:</span> <span class="hljs-number">5</span><br>        <span class="hljs-attr">min-idle:</span> <span class="hljs-number">0</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.33</span><span class="hljs-number">.135</span><span class="hljs-string">:8848</span><br><span class="hljs-attr">mybatis-plus:</span><br>  <span class="hljs-attr">type-aliases-package:</span> <span class="hljs-string">com.chaoo.service.user.mapper</span><br>  <span class="hljs-attr">global-config:</span><br>    <span class="hljs-attr">db-config:</span><br>      <span class="hljs-attr">id-type:</span> <span class="hljs-string">auto</span> <span class="hljs-comment"># 自增长</span><br>      <span class="hljs-attr">table-prefix:</span> <span class="hljs-string">ejyy_</span><br>  <span class="hljs-attr">configuration:</span><br>    <span class="hljs-attr">log-impl:</span> <span class="hljs-string">org.apache.ibatis.logging.stdout.StdOutImpl</span><br>    <span class="hljs-attr">map-underscore-to-camel-case:</span> <span class="hljs-literal">false</span> <span class="hljs-comment"># 关闭驼峰</span><br></code></pre></td></tr></table></figure>
 
 
                 

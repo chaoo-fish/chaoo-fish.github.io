@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.3k 字
+          4.5k 字
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          28 分钟
+          38 分钟
         
       </span>
     
@@ -287,12 +287,11 @@
 
 
 
-<h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h2 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h2><p>会使用了</p>
-<h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h2 id="不同模块中调用Service"><a href="#不同模块中调用Service" class="headerlink" title="不同模块中调用Service"></a>不同模块中调用Service</h2><p>需要在需要的模块增加包扫描</p>
+<h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h1 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h1><h2 id="不同模块中调用Service"><a href="#不同模块中调用Service" class="headerlink" title="不同模块中调用Service"></a>不同模块中调用Service</h2><p>需要在需要的模块增加包扫描</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication(</span><br><span class="hljs-meta">        scanBasePackages = &#123;&quot;com.chaoo.service.user&quot;,&quot;com.chaoo.service.basic&quot;&#125;</span><br><span class="hljs-meta">)</span><br><span class="hljs-meta">@MapperScan(&quot;com.chaoo.service.basic.mapper&quot;)</span><br><span class="hljs-meta">@EnableDiscoveryClient</span> <span class="hljs-comment">// 开启服务发现 nacos</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BasicApplication</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(BasicApplication.class,args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>补充：</strong></p>
-<p>问了朋友，用 openFeign 去远程调用</p>
+<p>用 openFeign 去远程调用就可以了，后面项目已经做了更改</p>
 <h2 id="RequestBody接收数据报错"><a href="#RequestBody接收数据报错" class="headerlink" title="@RequestBody接收数据报错"></a>@RequestBody接收数据报错</h2><blockquote>
 <p>String只能接收JSON格式</p>
 </blockquote>
@@ -305,7 +304,7 @@
 
 
 
-<p><code>NoticeInfo</code></p>
+<p><code>NoticeInfo.java</code></p>
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202208171657128.png" srcset="/img/loading.gif" lazyload alt="image-20220817165700083" style="zoom:67%;" />
 
 <p>前端给的数据：</p>
@@ -354,6 +353,18 @@
 
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">vim</span> /etc/redis.<span class="hljs-keyword">conf</span><br><br>进去把 protercted-<span class="hljs-keyword">mode</span> 设为 <span class="hljs-keyword">no</span><br></code></pre></td></tr></table></figure>
 
+
+
+<h1 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h1><h2 id="加入消息队列启动不了"><a href="#加入消息队列启动不了" class="headerlink" title="加入消息队列启动不了"></a>加入消息队列启动不了</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">Caused by: org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.remoting</span><span class="hljs-selector-class">.exception</span><span class="hljs-selector-class">.RemotingConnectException</span>: connect to <span class="hljs-selector-attr">[192.168.72.111:9876, 192.168.72.112:9876]</span> failed<br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.remoting</span><span class="hljs-selector-class">.netty</span><span class="hljs-selector-class">.NettyRemotingClient</span><span class="hljs-selector-class">.getAndCreateNameserverChannel</span>(NettyRemotingClient<span class="hljs-selector-class">.java</span>:<span class="hljs-number">458</span>) ~<span class="hljs-selector-attr">[rocketmq-remoting-4.9.3.jar:4.9.3]</span><br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.remoting</span><span class="hljs-selector-class">.netty</span><span class="hljs-selector-class">.NettyRemotingClient</span><span class="hljs-selector-class">.getAndCreateChannel</span>(NettyRemotingClient<span class="hljs-selector-class">.java</span>:<span class="hljs-number">413</span>) ~<span class="hljs-selector-attr">[rocketmq-remoting-4.9.3.jar:4.9.3]</span><br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.remoting</span><span class="hljs-selector-class">.netty</span><span class="hljs-selector-class">.NettyRemotingClient</span><span class="hljs-selector-class">.invokeSync</span>(NettyRemotingClient<span class="hljs-selector-class">.java</span>:<span class="hljs-number">382</span>) ~<span class="hljs-selector-attr">[rocketmq-remoting-4.9.3.jar:4.9.3]</span><br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.client</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.MQClientAPIImpl</span><span class="hljs-selector-class">.getTopicRouteInfoFromNameServer</span>(MQClientAPIImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1379</span>) ~<span class="hljs-selector-attr">[rocketmq-client-4.9.3.jar:4.9.3]</span><br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.client</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.MQClientAPIImpl</span><span class="hljs-selector-class">.getTopicRouteInfoFromNameServer</span>(MQClientAPIImpl<span class="hljs-selector-class">.java</span>:<span class="hljs-number">1369</span>) ~<span class="hljs-selector-attr">[rocketmq-client-4.9.3.jar:4.9.3]</span><br>	at org<span class="hljs-selector-class">.apache</span><span class="hljs-selector-class">.rocketmq</span><span class="hljs-selector-class">.client</span><span class="hljs-selector-class">.impl</span><span class="hljs-selector-class">.factory</span><span class="hljs-selector-class">.MQClientInstance</span><span class="hljs-selector-class">.updateTopicRouteInfoFromNameServer</span>(MQClientInstance<span class="hljs-selector-class">.java</span>:<span class="hljs-number">623</span>) ~<span class="hljs-selector-attr">[rocketmq-client-4.9.3.jar:4.9.3]</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>开始排查</p>
+</blockquote>
+<p>1.显示注掉了监听器，发现启动不报错，但是还是找不到地址</p>
+<p>2.去虚拟机查看集群日志，发现日志里面两台虚拟机互相访问不到对面的nameserver</p>
+<p>感觉是配置文件问题，然后就去查看配置文件，发现因为我的ip都是通过 <code>/etc/hosts</code> 里面的名字器映射的</p>
+<p><strong>问题就出在这</strong>，我的名字他映射不了，我也不知道为什么，我就只能全部将名字改为 ip</p>
+<p>然后就 OK 了</p>
 
                 
               </div>
