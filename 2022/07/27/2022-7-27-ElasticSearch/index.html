@@ -352,7 +352,10 @@
 
 <h3 id="验证服务"><a href="#验证服务" class="headerlink" title="验证服务"></a>验证服务</h3><p>启动成功后，在浏览器地址栏中输入：<a target="_blank" rel="noopener" href="http://192.168.33.137:5601/">http://192.168.33.137:5601</a> 进行访问操作</p>
 <p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/img/202207291707698.png" srcset="/img/loading.gif" lazyload alt="image-20220729170713495"></p>
-<h1 id="进阶⏳"><a href="#进阶⏳" class="headerlink" title="进阶⏳"></a>进阶⏳</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h2 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h2><h2 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h2><h2 id="分片原理"><a href="#分片原理" class="headerlink" title="分片原理"></a>分片原理</h2><h2 id="文档分析"><a href="#文档分析" class="headerlink" title="文档分析"></a>文档分析</h2><h2 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h2><h2 id="操作ES"><a href="#操作ES" class="headerlink" title="操作ES"></a>操作ES</h2><h3 id="映射属性"><a href="#映射属性" class="headerlink" title="映射属性"></a>映射属性</h3><p>这里使用到了 mapping 属性。mapping是对索引库中文档的约束，常见的mapping属性包括：</p>
+<h1 id="进阶⏳"><a href="#进阶⏳" class="headerlink" title="进阶⏳"></a>进阶⏳</h1><h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h2 id="路由计算"><a href="#路由计算" class="headerlink" title="路由计算"></a>路由计算</h2><h2 id="分片控制"><a href="#分片控制" class="headerlink" title="分片控制"></a>分片控制</h2><h2 id="分片原理"><a href="#分片原理" class="headerlink" title="分片原理"></a>分片原理</h2><h2 id="文档分析"><a href="#文档分析" class="headerlink" title="文档分析"></a>文档分析</h2><h2 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h2><h2 id="操作ES"><a href="#操作ES" class="headerlink" title="操作ES"></a>操作ES</h2><blockquote>
+<p>对于 ES 来说，创建索引就相当于创建数据库中的表，新增文档就相当于在表中插入数据</p>
+</blockquote>
+<h3 id="映射属性"><a href="#映射属性" class="headerlink" title="映射属性"></a>映射属性</h3><p>这里使用到了 mapping 属性。mapping是对索引库中文档的约束，常见的mapping属性包括：</p>
 <ul>
 <li>type：字段数据类型，常见的简单类型有：<ul>
 <li>字符串：text（可分词的文本）、keyword（精确值，例如：品牌、国家、ip地址）</li>
