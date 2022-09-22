@@ -23,8 +23,8 @@
 <meta property="og:site_name" content="随风">
 <meta property="og:description" content="本人的秋招记录知识总结">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png">
-<meta property="og:image" content="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/stack-area.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/java-runtime-data-areas-jdk1.8.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/stack-area.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20220920130857313.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20220920130916500.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20220920132143423.png">
@@ -35,7 +35,7 @@
 <meta property="article:author" content="Chaoo">
 <meta property="article:tag" content="标签">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/java-runtime-data-areas-jdk1.8.png">
   
   
   
@@ -282,14 +282,14 @@
               <div class="markdown-body">
                 
                 <h1 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h1><h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><h2 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h2><p>在 JDK1.8 之前方法区的实现是永久代，之后则是元空间</p>
-<p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png" srcset="/img/loading.gif" lazyload alt="Java 运行时数据区域（JDK1.8 之后）"></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/java-runtime-data-areas-jdk1.8.png" srcset="/img/loading.gif" lazyload alt="Java 运行时数据区域（JDK1.8 之后）"></p>
 <h3 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h3><p>线程私有，记录当前线程执行到哪个位置，线程切换后能恢复到正确位置，生命周期和线程相同</p>
 <p>是唯一不会出现<code>OutOfMemoryError</code>的内存区域</p>
 <h3 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h3><p>线程私有，声明周期也是和线程相同的</p>
 <p>栈绝对算的上是 JVM 运行时数据区域的一个核心，除了一些 Native 方法调用是通过本地方法栈实现的(后面会提到)，其他所有的 Java 方法调用都是通过栈来实现的（也需要和其他运行时数据区域比如程序计数器配合）</p>
 <p>方法调用的数据需要通过栈进行传递，每一次方法调用都会有一个对应的栈帧被压入栈中，每一个方法调用结束后，都会有一个栈帧被弹出</p>
 <p>栈由一个个栈帧组成，而每个栈帧中都拥有：<strong>局部变量表</strong>、<strong>操作数栈</strong>、<strong>动态链接</strong>、<strong>方法返回地址</strong>。和数据结构上的栈类似，两者都是先进后出的数据结构，只支持出栈和入栈两种操作</p>
-<p><img src="https://guide-blog-images.oss-cn-shenzhen.aliyuncs.com/github/javaguide/java/jvm/stack-area.png" srcset="/img/loading.gif" lazyload alt="Java 虚拟机栈"></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/stack-area.png" srcset="/img/loading.gif" lazyload alt="Java 虚拟机栈"></p>
 <p><strong>栈帧随着方法调用而创建，随着方法结束而销毁。无论方法正常完成还是异常完成都算作方法结束</strong></p>
 <p>程序运行中栈可能出现的错误：</p>
 <ul>
@@ -351,7 +351,7 @@
 <p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20220921220205938.png" srcset="/img/loading.gif" lazyload alt="image-20220921220205938"></p>
 <h1 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h1><h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>一主多从</p>
 <p>多台服务器去配置</p>
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>✨缓存和数据库中都没有要访问的数据</p>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><h2 id="主从复制原理"><a href="#主从复制原理" class="headerlink" title="主从复制原理"></a>主从复制原理</h2><h2 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h2><p>✨缓存和数据库中都没有要访问的数据</p>
 <blockquote>
 <p>用户想要查询某个数据，在 Redis 中查询不到，即没有缓存命中，这时就会直接访问数据库进行查询。当请求量超出数据库最大承载量时，就会导致数据库崩溃。这种情况一般发生在非正常 URL 访问，目的不是为了获取数据，而是进行恶意攻击</p>
 </blockquote>
