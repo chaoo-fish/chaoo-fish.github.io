@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.7k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          16 分钟
+          23 分钟
         
       </span>
     
@@ -367,7 +367,9 @@
 
 
 
-<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><p>有镜像才能创建容器，所以我们需要去先拉取一个镜像</p>
+<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run [OPTIONS] IMAGE [COMMAND] [ARG...]<br><br>docker ps	<br><br>docker ps [OPTIONS]<br><br>docker start 容器ID或容器名<br><br>docker restart 容器ID或容器名<br><br>docker stop 容器ID或容器名<br><br>docker <span class="hljs-built_in">kill</span> 容器ID或容器名<br><br>docker <span class="hljs-built_in">rm</span> 容器ID<br></code></pre></td></tr></table></figure>
+
+<p>有镜像才能创建容器，所以我们需要去先拉取一个镜像</p>
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221008223548553.png" srcset="/img/loading.gif" lazyload alt="image-20221008223548553" style="zoom:67%;" />
 
 <p>此处演示使用 ubuntu</p>
@@ -389,6 +391,52 @@
 <p>这里面我指定了容器的名字为 <strong>helloworld</strong> ，进入容器执行了<code>ps -ef</code>的指令</p>
 <p><code>/bin/bash</code>：放在镜像名后的是命令，这里我们希望有个交互式 Shell，因此使用的是 <code>/bin/bash</code></p>
 <p>要退出终端，直接输入 <code>exit</code></p>
+<p><code>docker ps [OPTIONS]</code>：列出当前所有<strong>正在运行</strong>的容器</p>
+<ul>
+<li>-a：列出当前所有正在运行的容器+历史上运行过的</li>
+<li>-l：显示最近创建的容器</li>
+<li>-n：显示最近 n 个创建的容器</li>
+<li>-q：静默模式，只显示容器编号</li>
+</ul>
+<p><strong>退出容器</strong></p>
+<ul>
+<li><code>exit</code>：run 进去容器，<code>exit</code>退出，容器停止</li>
+<li><code>ctrl + p + q</code>：run 进去容器，<code>ctrl + p + q</code> 退出，容器不停止</li>
+</ul>
+<p><strong>启动已停止运行的容器</strong></p>
+<p><code>docker start 容器ID或容器名</code></p>
+<p><strong>重启容器</strong></p>
+<p><code>docker restart 容器ID或容器名</code></p>
+<p><strong>停止容器</strong></p>
+<p><code>docker stop 容器ID或容器名</code></p>
+<p><strong>强制停止容器</strong></p>
+<p><code>docker kill 容器ID或容器名</code></p>
+<p><strong>删除已停止容器</strong></p>
+<p><code>docker rm 容器ID</code></p>
+<p>一次删除多个容器实例</p>
+<ul>
+<li><code>docker rm -f $&#123;docker ps -a -q&#125;</code>：运行没成功</li>
+<li><code>docker ps -a -q | xargs docker rm</code></li>
+</ul>
+<hr>
+<p>有镜像才可以去创建容器，这是我们去进行容器操作的根本前提</p>
+<p><strong>启动守护式容器</strong></p>
+<blockquote>
+<p>注意此处其实还是去创建一个容器，而不是进入一个已经创建好的容器</p>
+<p>🍭其实在使用 <code>docker run -d</code> 时候我们可以发现，如果启动的是 ubuntu，那么 <code>docker ps</code> 就不会显示这个容器，如果是 redis ，那么就会有这个容器进程，这是因为</p>
+</blockquote>
+<p>在大部分的场景下，我们希望 docker 的服务是在后台运行的，我们可以通过 -d 指定容器 在后台运行模式</p>
+<p><code>docker run -d 镜像名:版本</code></p>
+<ul>
+<li>前台交互式启动：<code>docker run -it redis:6.0.8</code></li>
+<li>后台守护式启动：<code>docker run -d redis:6.0.8</code></li>
+</ul>
+<p><strong>查看容器日志</strong></p>
+<p><code>docker logs 容器ID</code></p>
+<p><strong>查看容器内运行的进程</strong></p>
+<p><code>docker top 容器ID</code></p>
+<p><strong>查看容器内部细节</strong></p>
+<p><code>docker inspect 容器ID</code></p>
 <h1 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h1><h1 id="本地镜像发布到阿里云"><a href="#本地镜像发布到阿里云" class="headerlink" title="本地镜像发布到阿里云"></a>本地镜像发布到阿里云</h1><h1 id="本地镜像发布到私有库"><a href="#本地镜像发布到私有库" class="headerlink" title="本地镜像发布到私有库"></a>本地镜像发布到私有库</h1><h1 id="Docker容器数据卷"><a href="#Docker容器数据卷" class="headerlink" title="Docker容器数据卷"></a>Docker容器数据卷</h1><h1 id="Docker常规安装简介"><a href="#Docker常规安装简介" class="headerlink" title="Docker常规安装简介"></a>Docker常规安装简介</h1>
                 
               </div>
