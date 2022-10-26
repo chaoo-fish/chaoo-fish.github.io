@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221008223945038.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221008224610191.png">
 <meta property="article:published_time" content="2022-09-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-16T16:00:00.000Z">
 <meta property="article:author" content="Chaoo">
 <meta property="article:tag" content="Dokcer">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.8k 字
         
       </span>
     
@@ -287,7 +287,8 @@
                 <blockquote>
 <p>本篇笔记是根据尚硅谷的Docker视频整理的：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gr4y1U7CY/">视频穿送门</a></p>
 <p>笔记开始时间  2022-9-28</p>
-<p>笔记结束时间  2022-10-10</p>
+<p>笔记结束时间  2022-10-17</p>
+<p>零零散散终于把初级看完了</p>
 </blockquote>
 <h1 id="📒Docker简介"><a href="#📒Docker简介" class="headerlink" title="📒Docker简介"></a>📒Docker简介</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><blockquote>
 <p>Docker 以笔者目前的水平看看来，是一个划时代的发明，极大程度上满足了我们在环境上的需求</p>
@@ -318,7 +319,7 @@
 <li>容器（container）</li>
 <li>仓库（repository）</li>
 </ul>
-<h1 id="Docker常用命令"><a href="#Docker常用命令" class="headerlink" title="Docker常用命令"></a>Docker常用命令</h1><h2 id="帮助启动类命令"><a href="#帮助启动类命令" class="headerlink" title="帮助启动类命令"></a>帮助启动类命令</h2><p>启动 docker：<code>systemctl start docker</code>   </p>
+<h1 id="📒Docker常用命令"><a href="#📒Docker常用命令" class="headerlink" title="📒Docker常用命令"></a>📒Docker常用命令</h1><h2 id="帮助启动类命令"><a href="#帮助启动类命令" class="headerlink" title="帮助启动类命令"></a>帮助启动类命令</h2><p>启动 docker：<code>systemctl start docker</code>   </p>
 <p>停止docker：<code>systemctl stop docker</code>   </p>
 <p>重启docker：<code>systemctl restart docker</code>   </p>
 <p>查看 docker 状态：<code>systemctl status docker</code>   </p>
@@ -423,7 +424,7 @@
 <p><strong>启动守护式容器</strong></p>
 <blockquote>
 <p>注意此处其实还是去创建一个容器，而不是进入一个已经创建好的容器</p>
-<p>🍭其实在使用 <code>docker run -d</code> 时候我们可以发现，如果启动的是 ubuntu，那么 <code>docker ps</code> 就不会显示这个容器，如果是 redis ，那么就会有这个容器进程，这是因为</p>
+<p>🍭其实在使用 <code>docker run -d</code> 时候我们可以发现，如果启动的是 ubuntu，那么 <code>docker ps</code> 就不会显示这个容器，如果是 redis ，那么就会有这个容器进程，这是因为redis有前台进程</p>
 </blockquote>
 <p>在大部分的场景下，我们希望 docker 的服务是在后台运行的，我们可以通过 -d 指定容器 在后台运行模式</p>
 <p><code>docker run -d 镜像名:版本</code></p>
@@ -437,6 +438,10 @@
 <p><code>docker top 容器ID</code></p>
 <p><strong>查看容器内部细节</strong></p>
 <p><code>docker inspect 容器ID</code></p>
+<hr>
+<blockquote>
+<p> 可以把容器看作是一个简易版的 Linux 环境</p>
+</blockquote>
 <h1 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h1><h1 id="本地镜像发布到阿里云"><a href="#本地镜像发布到阿里云" class="headerlink" title="本地镜像发布到阿里云"></a>本地镜像发布到阿里云</h1><h1 id="本地镜像发布到私有库"><a href="#本地镜像发布到私有库" class="headerlink" title="本地镜像发布到私有库"></a>本地镜像发布到私有库</h1><h1 id="Docker容器数据卷"><a href="#Docker容器数据卷" class="headerlink" title="Docker容器数据卷"></a>Docker容器数据卷</h1><h1 id="Docker常规安装简介"><a href="#Docker常规安装简介" class="headerlink" title="Docker常规安装简介"></a>Docker常规安装简介</h1>
                 
               </div>
@@ -524,6 +529,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/10/25/2022-8-8-%E7%AE%97%E6%B3%95/" title="AcWing刷题模板">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AcWing刷题模板</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
