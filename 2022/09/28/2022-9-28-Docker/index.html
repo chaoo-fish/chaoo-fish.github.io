@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          3.3k 字
         
       </span>
     
@@ -241,7 +241,7 @@
         
         
         
-          23 分钟
+          28 分钟
         
       </span>
     
@@ -368,7 +368,7 @@
 
 
 
-<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run [OPTIONS] IMAGE [COMMAND] [ARG...]<br><br>docker ps	<br><br>docker ps [OPTIONS]<br><br>docker start 容器ID或容器名<br><br>docker restart 容器ID或容器名<br><br>docker stop 容器ID或容器名<br><br>docker <span class="hljs-built_in">kill</span> 容器ID或容器名<br><br>docker <span class="hljs-built_in">rm</span> 容器ID<br></code></pre></td></tr></table></figure>
+<h2 id="容器命令"><a href="#容器命令" class="headerlink" title="容器命令"></a>容器命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run [OPTIONS] IMAGE [COMMAND] [ARG...]<br><br>docker ps	<br><br>docker ps [OPTIONS]<br><span class="hljs-comment"># 启动容器</span><br>docker start 容器ID或容器名<br><br>docker restart 容器ID或容器名<br><br>docker stop 容器ID或容器名<br><span class="hljs-comment"># 强制删除/停止容器</span><br>docker <span class="hljs-built_in">kill</span> 容器ID或容器名<br><br>docker <span class="hljs-built_in">rm</span> 容器ID<br><br>docker run -d 镜像名:版本<br><br>docker logs 容器ID<br><br>docker top 容器ID<br><br>docker <span class="hljs-built_in">exec</span> -it 容器ID /bin/bash<br><br>docker inspect 容器ID<br><br>docker <span class="hljs-built_in">cp</span> 容器ID:容器内路径 目的主机路径<br><span class="hljs-comment"># 导出容器</span><br>docker <span class="hljs-built_in">export</span> 容器ID&gt; 文件名.tar <br><br><span class="hljs-built_in">cat</span> 文件名.tar | docker import - 镜像用户/镜像名:镜像版本<br></code></pre></td></tr></table></figure>
 
 <p>有镜像才能创建容器，所以我们需要去先拉取一个镜像</p>
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221008223548553.png" srcset="/img/loading.gif" lazyload alt="image-20221008223548553" style="zoom:67%;" />
@@ -442,6 +442,21 @@
 <blockquote>
 <p> 可以把容器看作是一个简易版的 Linux 环境</p>
 </blockquote>
+<p><strong>进入正在运行的容器并以命令行交互</strong></p>
+<p><code>docker exec -it 容器ID /bin/bash</code></p>
+<p><code>docker attach 容器ID</code></p>
+<p>两个指令的区别：</p>
+<ul>
+<li>attach 直接进入容器启动命令的终端，不会启动新的进程，用 exit 退出，会导致容器的停止</li>
+<li>exec 是在容器中打开新的终端，并且可以启动新的进程，用 exit 退出，不会导致容器的停止</li>
+</ul>
+<p><strong>从容器内拷贝文件到主机上</strong></p>
+<p><code>docker cp 容器ID:容器内路径 目的主机路径</code></p>
+<p><strong>导入和导出容器</strong></p>
+<p>export 导出容器的内容留作为一个 tar 归档文件【对应import命令】</p>
+<p>import 从tar包中的内容创建一个新的文件系统再导入为镜像【对应export】</p>
+<p><code>docker export 容器ID&gt; 文件名.tar </code></p>
+<p><code>cat 文件名.tar | docker import - 镜像用户/镜像名:镜像版本  </code></p>
 <h1 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a>Docker镜像</h1><h1 id="本地镜像发布到阿里云"><a href="#本地镜像发布到阿里云" class="headerlink" title="本地镜像发布到阿里云"></a>本地镜像发布到阿里云</h1><h1 id="本地镜像发布到私有库"><a href="#本地镜像发布到私有库" class="headerlink" title="本地镜像发布到私有库"></a>本地镜像发布到私有库</h1><h1 id="Docker容器数据卷"><a href="#Docker容器数据卷" class="headerlink" title="Docker容器数据卷"></a>Docker容器数据卷</h1><h1 id="Docker常规安装简介"><a href="#Docker常规安装简介" class="headerlink" title="Docker常规安装简介"></a>Docker常规安装简介</h1>
                 
               </div>
@@ -530,7 +545,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/25/2022-8-8-%E7%AE%97%E6%B3%95/" title="AcWing刷题模板">
+                      <a href="/2022/10/25/2022-10-25-AcWing/" title="AcWing刷题模板">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">AcWing刷题模板</span>
                         <span class="visible-mobile">上一篇</span>
