@@ -42,6 +42,17 @@
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111220410724.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111220549181.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111224033075.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112083910934.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091026083.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091158156.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091531451.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201828809.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201851890.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112202031052.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201939267.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112202513270.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112210142759.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221113145807702.png">
 <meta property="article:published_time" content="2022-09-27T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-10-16T16:00:00.000Z">
 <meta property="article:author" content="Chaoo">
@@ -239,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.1k 字
+          7.9k 字
         
       </span>
     
@@ -250,7 +261,7 @@
         
         
         
-          60 分钟
+          66 分钟
         
       </span>
     
@@ -518,6 +529,8 @@
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111220142027.png" srcset="/img/loading.gif" lazyload alt="image-20221111220142027" style="zoom:67%;" />
 
 <p>提交镜像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker commit -m=<span class="hljs-string">&quot;add vim cmd&quot;</span> -a=<span class="hljs-string">&quot;chaoo&quot;</span> b4156f799d17 chaoo/mybuntu:1.1<br></code></pre></td></tr></table></figure>
+
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111220410724.png" srcset="/img/loading.gif" lazyload alt="image-20221111220410724" style="zoom:67%;" />
 
 <p>运行镜像</p>
@@ -529,7 +542,38 @@
 <p>Docker中的镜像分层，支持通过扩展现有镜像，创建新的镜像。类似Java继承于一个Base基础类，自己再按需扩展。</p>
 <p>新镜像是从 base 镜像一层一层叠加生成的。每安装一个软件，就在现有镜像的基础上增加一层</p>
 <p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221111224033075.png" srcset="/img/loading.gif" lazyload alt="image-20221111224033075"></p>
-<h1 id="📒本地镜像发布到阿里云"><a href="#📒本地镜像发布到阿里云" class="headerlink" title="📒本地镜像发布到阿里云"></a>📒本地镜像发布到阿里云</h1><h1 id="📒本地镜像发布到私有库"><a href="#📒本地镜像发布到私有库" class="headerlink" title="📒本地镜像发布到私有库"></a>📒本地镜像发布到私有库</h1><h1 id="📒Docker容器数据卷"><a href="#📒Docker容器数据卷" class="headerlink" title="📒Docker容器数据卷"></a>📒Docker容器数据卷</h1><h1 id="📒Docker常规安装简介"><a href="#📒Docker常规安装简介" class="headerlink" title="📒Docker常规安装简介"></a>📒Docker常规安装简介</h1>
+<h1 id="本地镜像发布到阿里云"><a href="#本地镜像发布到阿里云" class="headerlink" title="本地镜像发布到阿里云"></a>本地镜像发布到阿里云</h1><h2 id="本地镜像发布到阿里云流程"><a href="#本地镜像发布到阿里云流程" class="headerlink" title="本地镜像发布到阿里云流程"></a>本地镜像发布到阿里云流程</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112083910934.png" srcset="/img/loading.gif" lazyload alt="image-20221112083910934"></p>
+<h2 id="阿里云开发者平台"><a href="#阿里云开发者平台" class="headerlink" title="阿里云开发者平台"></a>阿里云开发者平台</h2><p><a target="_blank" rel="noopener" href="https://home.console.aliyun.com/home/dashboard/ProductAndService">https://home.console.aliyun.com/home/dashboard/ProductAndService</a></p>
+<h2 id="创建仓库镜像"><a href="#创建仓库镜像" class="headerlink" title="创建仓库镜像"></a>创建仓库镜像</h2><p><strong>1.选择控制台，进入容器镜像服务</strong></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091026083.png" srcset="/img/loading.gif" lazyload alt="image-20221112091026083"></p>
+<p><strong>2.选择个人实例</strong></p>
+<p><strong><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091158156.png" srcset="/img/loading.gif" lazyload alt="image-20221112091158156"></strong></p>
+<p><strong>3.命名空间</strong></p>
+<blockquote>
+<p>此处进入点击一下上图的<strong>个人实例</strong>即可</p>
+</blockquote>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112091531451.png" srcset="/img/loading.gif" lazyload alt="image-20221112091531451"></p>
+<p>创建完成将其改成<strong>公有</strong></p>
+<p><strong>4.镜像仓库</strong></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201828809.png" srcset="/img/loading.gif" lazyload alt="image-20221112201828809"></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201851890.png" srcset="/img/loading.gif" lazyload alt="image-20221112201851890"></p>
+<p><strong>5.进入管理界面</strong></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112202031052.png" srcset="/img/loading.gif" lazyload alt="image-20221112202031052"></p>
+<h2 id="将镜像推送到阿里云"><a href="#将镜像推送到阿里云" class="headerlink" title="将镜像推送到阿里云"></a>将镜像推送到阿里云</h2><p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112201939267.png" srcset="/img/loading.gif" lazyload alt="image-20221112201939267"></p>
+<p>上传到阿里云</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker login --username=sansisuifeng registry.cn-hangzhou.aliyuncs.com<br>docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/chaoo/myubuntu:[镜像版本号]<br>docker push registry.cn-hangzhou.aliyuncs.com/chaoo/myubuntu:[镜像版本号]<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112202513270.png" srcset="/img/loading.gif" lazyload alt="image-20221112202513270"></p>
+<h2 id="将阿里云上镜像下载到本地"><a href="#将阿里云上镜像下载到本地" class="headerlink" title="将阿里云上镜像下载到本地"></a>将阿里云上镜像下载到本地</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull registry.cn-hangzhou.aliyuncs.com/chaoo/myubuntu:1.1<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112210142759.png" srcset="/img/loading.gif" lazyload alt="image-20221112210142759"></p>
+<h1 id="📒本地镜像发布到私有库"><a href="#📒本地镜像发布到私有库" class="headerlink" title="📒本地镜像发布到私有库"></a>📒本地镜像发布到私有库</h1><p><strong>本地镜像发布到私有库流程</strong></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221113145807702.png" srcset="/img/loading.gif" lazyload alt="image-20221113145807702"></p>
+<p><strong>什么是私有库</strong></p>
+<p>1.官方Docker Hub地址：<a target="_blank" rel="noopener" href="https://hub.docker.com/%EF%BC%8C%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E8%AE%BF%E9%97%AE%E5%A4%AA%E6%85%A2%E4%BA%86%E4%B8%94%E5%87%86%E5%A4%87%E8%A2%AB%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%96%E4%BB%A3%E7%9A%84%E8%B6%8B%E5%8A%BF%EF%BC%8C%E4%B8%8D%E5%A4%AA%E4%B8%BB%E6%B5%81%E3%80%82">https://hub.docker.com/，中国大陆访问太慢了且准备被阿里云取代的趋势，不太主流。</a></p>
+<p>2.Dockerhub、阿里云这样的公共镜像仓库可能不太方便，涉及机密的公司不可能提供镜像给公网，所以需要创建一个本地私人仓库供给团队使用，基于公司内部项目构建镜像。</p>
+<p>Docker Registry 是官方提供的工具，可以用于构建私有镜像仓库</p>
+<h1 id="📒Docker容器数据卷"><a href="#📒Docker容器数据卷" class="headerlink" title="📒Docker容器数据卷"></a>📒Docker容器数据卷</h1><h1 id="📒Docker常规安装简介"><a href="#📒Docker常规安装简介" class="headerlink" title="📒Docker常规安装简介"></a>📒Docker常规安装简介</h1>
                 
               </div>
             
