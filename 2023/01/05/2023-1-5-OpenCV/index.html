@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Chaoo">
+  <meta name="keywords" content="Java, Blog">
+  
+    <meta name="description" content="OpenCV使用过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV学习使用">
+<meta property="og:url" content="http://example.com/2023/01/05/2023-1-5-OpenCV/index.html">
+<meta property="og:site_name" content="随风">
+<meta property="og:description" content="OpenCV使用过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202301071435741.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202301071439542.png">
+<meta property="article:published_time" content="2023-01-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-04T16:00:00.000Z">
+<meta property="article:author" content="Chaoo">
+<meta property="article:tag" content="OpenCV">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202301071435741.png">
+  
+  
+  
+  <title>OpenCV学习使用 - 随风</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Chaoo</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="OpenCV学习使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-01-05 00:00" pubdate>
+          2023年1月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">OpenCV学习使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>记录毕设过程</p>
+</blockquote>
+<h1 id="装环境"><a href="#装环境" class="headerlink" title="装环境"></a>装环境</h1><p>使用 Anaconda 去创建Python 环境</p>
+<h1 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h1><p>列出当前存在的环境：<code>conda info -e  或者  conda-env list</code></p>
+<p>创建环境：<code>conda create -n 环境名称 python=版本</code></p>
+<p>切换环境：<code>	activate 环境名称</code></p>
+<h1 id="1-OpenCV简介"><a href="#1-OpenCV简介" class="headerlink" title="1 OpenCV简介"></a>1 OpenCV简介</h1><h2 id="1-1-安装方法"><a href="#1-1-安装方法" class="headerlink" title="1.1 安装方法"></a>1.1 安装方法</h2><blockquote>
+<p>注意Python版本控制在3.6</p>
+</blockquote>
+<p>安装一些前置库</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">pip install numpy scipy matplotlib<br></code></pre></td></tr></table></figure>
+
+<p>安装 opencv 库</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">pip install opencv-python==<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">2</span>.<span class="hljs-number">17</span><br></code></pre></td></tr></table></figure>
+
+<p>测试是否安装成功</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2<br><br><span class="hljs-comment"># 读取一个图片进行显示</span><br>lena = cv2.imread(<span class="hljs-string">&quot;toux.jpg&quot;</span>)<br>cv2.imshow(<span class="hljs-string">&quot;image&quot;</span>,lena)<br>cv2.waitKey(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<p>使用 SIFT 和 SURF 等进行特征提取时候，需要安装的库</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">pip install opencv-contrib-python==<span class="hljs-number">3</span>.<span class="hljs-number">4</span>.<span class="hljs-number">2</span>.<span class="hljs-number">17</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-OpenCV的模块"><a href="#1-2-OpenCV的模块" class="headerlink" title="1.2 OpenCV的模块"></a>1.2 OpenCV的模块</h2><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202301071435741.png" srcset="/img/loading.gif" lazyload alt="image-20230107143528672" style="zoom:67%;" />
+
+<p>​	<img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202301071439542.png" srcset="/img/loading.gif" lazyload alt="image-20230107143934457" style="zoom:87%;" /></p>
+<h1 id="2-OpenCV基本操作"><a href="#2-OpenCV基本操作" class="headerlink" title="2 OpenCV基本操作"></a>2 OpenCV基本操作</h1><h2 id="2-1-图像的基础操作"><a href="#2-1-图像的基础操作" class="headerlink" title="2.1 图像的基础操作"></a>2.1 图像的基础操作</h2><p><strong>图像的IO操作</strong></p>
+<p>读取图像</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">cv.imread()	<br></code></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li><p>读取 的图片路径</p>
+</li>
+<li><p>读取方式的标识</p>
+<ul>
+<li><p>1 ：彩色模式（默认）</p>
+</li>
+<li><p>0 ：灰度模式</p>
+</li>
+<li><p>-1 ：包括 alpha 通道的加载图像模式</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>显示图像</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">cv.imshow()<br></code></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>显示图像的窗口名称，以字符串类型表示</li>
+<li>要加载的图像</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> cv2 <span class="hljs-keyword">as</span> cv<br><br><span class="hljs-comment"># 获取图像</span><br>img = cv.imread(<span class="hljs-string">&quot;image/amazing.jpg&quot;</span>, <span class="hljs-number">0</span>) <span class="hljs-comment"># 0是灰度</span><br><span class="hljs-comment"># 显示图像</span><br>cv.imshow(<span class="hljs-string">&quot;image1&quot;</span>,img)<br><br>cv.waitKey(<span class="hljs-number">0</span>)<br><br>cv.imwrite(<span class="hljs-string">&quot;amz2.png&quot;</span>,img)<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><h2 id="Solving-environment-failed"><a href="#Solving-environment-failed" class="headerlink" title="Solving environment: failed"></a>Solving environment: failed</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs bash">D:\B_Other\blog&gt;conda upgrade --all<br>Solving environment: failed<br><br><span class="hljs-comment"># &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; ERROR REPORT &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span><br><br>`$ D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins\Scripts\conda upgrade --all`<br><br>  environment variables:<br>                 CIO_TEST=&lt;not <span class="hljs-built_in">set</span>&gt;<br>               CONDA_ROOT=D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins<br>                 HOMEPATH=\Users\86138<br>                NODE_PATH=undefined;D:\Z_Ins_Position\A_IT\T-Vm\tabby\resources\builtin-plugins;<br>                          D:\Z_Ins_Position\A_IT\T-Vm\tabby\resources\app.asar\node_modules;C:\U<br>                          sers\86138\AppData\Roaming\tabby\plugins\node_modules<br>                     PATH=D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins;D:\Z_Ins_Position\A_IT\A<br>                          -python\Anaconda3_Ins\Library\mingw-w64\bin;D:\Z_Ins_Position\A_IT\A-p<br>                          ython\Anaconda3_Ins\Library\usr\bin;D:\Z_Ins_Position\A_IT\A-python\An<br>                          aconda3_Ins\Library\bin;D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins\<br>                          Scripts;C:\Program Files\Common Files\Oracle\Java\javapath;D:\Z_Ins_Po<br>                          sition\A_IT\T-Vm\vm16\bin\;C:\windows\System32\WindowsPowerShell\v1.0\<br>                          ;D:\Z_Ins_Position\A_IT\A_Java_Ins\jdk-11011\bin;D:\C_Other\apache-<br>                          tomcat-8.5.68\bin;D:\C_Other\apache-maven-3.2.3\bin;C:\Program Files<br>                          (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows<br>                          ;C:\windows\System32\Wbem;C:\windows\System32\OpenSSH\;C:\Program<br>                          Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA<br>                          Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\S<br>                          ystem32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\Sy<br>                          stem32\OpenSSH\;D:\Z_Ins_Position\A_IT\T_NodeJs_Ins\;C:\Program<br>                          Files\dotnet\;C:\Program Files (x86)\dotnet\;D:\Z_Ins_Position\A_IT\T-<br>                          Vm\xshell\;D:\Z_Ins_Position\A_IT\T-Vm\xftp\;D:\Z_Ins_Position\A_IT\A_<br>                          Redis\;D:\Z_Ins_Position\A_IT\C_WechatApplet\devtools\微信web开发者工具\dll;%<br>                          D:\Z_InIns_Position\A_IT\A_Mysql\mysql-8.0.20\mysql-8.0.20-winx64\bin;<br>                          D:\Z_Ins_Position\A_IT\A_Mysql\mysql-5.7.38\bin;C:\Users\86138\AppData<br>                          \Roaming\npm\node_modules\hexo-cli\bin;D:\C_Other\gradle-7.4.2\bin;D:\<br>                          Z_Ins_Position\A_IT\T-Vm\SSHSecureShellClient;D:\Z_Ins_Position\A_IT\A<br>                          _JavaWeb\WebStorm\WebStorm<br>                          2021.2.2\bin;;D:\Z_Ins_Position\A_IT\A_Mysql\datagrip\DataGrip 2021.1.<br>                          3\bin;;C:\Users\86138\AppData\Local\Microsoft\WindowsApps;D:\Z_Ins_Pos<br>                          ition\A_IT\T_VsCode\Microsoft VS<br>                          Code\bin;D:\Z_Ins_Position\A_IT\A_Java_Ins\ideaU2022\IntelliJ IDEA<br>                          2022.1.3\bin;<br>             PSMODULEPATH=C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\Windows<br>                          PowerShell\v1.0\Modules<br>       REQUESTS_CA_BUNDLE=&lt;not <span class="hljs-built_in">set</span>&gt;<br>            SSL_CERT_FILE=&lt;not <span class="hljs-built_in">set</span>&gt;<br><br>     active environment : None<br>       user config file : C:\Users\86138\.condarc<br> populated config files : C:\Users\86138\.condarc<br>          conda version : 4.5.4<br>    conda-build version : 3.10.5<br>         python version : 3.6.5.final.0<br>       base environment : D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins  (writable)<br>           channel URLs : https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/win-64<br>                          https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/noarch<br>                          https://repo.anaconda.com/pkgs/main/win-64<br>                          https://repo.anaconda.com/pkgs/main/noarch<br>                          https://repo.anaconda.com/pkgs/free/win-64<br>                          https://repo.anaconda.com/pkgs/free/noarch<br>                          https://repo.anaconda.com/pkgs/r/win-64<br>                          https://repo.anaconda.com/pkgs/r/noarch<br>                          https://repo.anaconda.com/pkgs/pro/win-64<br>                          https://repo.anaconda.com/pkgs/pro/noarch<br>                          https://repo.anaconda.com/pkgs/msys2/win-64<br>                          https://repo.anaconda.com/pkgs/msys2/noarch<br>          package cache : D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins\pkgs<br>                          C:\Users\86138\AppData\Local\conda\conda\pkgs<br>       envs directories : D:\Z_Ins_Position\A_IT\A-python\Anaconda3_Ins\envs<br>                          C:\Users\86138\AppData\Local\conda\conda\envs<br>                          C:\Users\86138\.conda\envs<br>               platform : win-64<br>             user-agent : conda/4.5.4 requests/2.18.4 CPython/3.6.5 Windows/10 Windows/10.0.19041<br>          administrator : False<br>             netrc file : None<br>           offline mode : False<br><br><br>V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V<br><br>CondaHTTPError: HTTP 000 CONNECTION FAILED <span class="hljs-keyword">for</span> url &lt;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/noarch/repodata.json&gt;<br>Elapsed: -<br><br>An HTTP error occurred when trying to retrieve this URL.<br>HTTP errors are often intermittent, and a simple retry will get you on your way.<br>SSLError(MaxRetryError(<span class="hljs-string">&#x27;HTTPSConnectionPool(host=\&#x27;</span>mirrors.tuna.tsinghua.edu.cn\<span class="hljs-string">&#x27;, port=443): Max retries exceeded with url: /anaconda/pkgs/main/noarch/repodata.json (Caused by SSLError(SSLError(&quot;bad handshake: Error([(\&#x27;</span>SSL routines\<span class="hljs-string">&#x27;, \&#x27;</span>ssl3_get_server_certificate\<span class="hljs-string">&#x27;, \&#x27;</span>certificate verify failed\<span class="hljs-string">&#x27;)],)&quot;,),))&#x27;</span>,),)<br><br>A reportable application error has occurred. Conda has prepared the above report.<br>If submitted, this report will be used by core maintainers to improve<br>future releases of conda.<br>Would you like conda to send this report to the core maintainers?<br>[y/N]: y<br>Upload successful.<br><br>Thank you <span class="hljs-keyword">for</span> helping to improve conda.<br>Opt-<span class="hljs-keyword">in</span> to always sending reports (and not see this message again)<br>by running<br><br>    $ conda config --<span class="hljs-built_in">set</span> report_errors <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>解决：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46673202/article/details/125013021">https://blog.csdn.net/m0_46673202/article/details/125013021</a></p>
+<p>上面博客第二种方法，直接改文件<code>.condarc</code>，电脑路径<code>C:\Users\86138</code></p>
+<h2 id="activate切换环境失效"><a href="#activate切换环境失效" class="headerlink" title="activate切换环境失效"></a>activate切换环境失效</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ronli/p/13499749.html">https://www.cnblogs.com/ronli/p/13499749.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/OpenCV/" class="category-chain-item">OpenCV</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/OpenCV/">#OpenCV</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>OpenCV学习使用</div>
+      <div>http://example.com/2023/01/05/2023-1-5-OpenCV/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Chaoo</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年1月5日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/01/09/hello-world/" title="Hello World">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/11/13/2022-11-13-Ubuntu/" title="Ubuntu">
+                        <span class="hidden-mobile">Ubuntu</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
