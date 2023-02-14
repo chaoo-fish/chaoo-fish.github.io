@@ -56,6 +56,11 @@
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112202513270.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221112210142759.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221113145807702.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142234352.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142237945.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142238568.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142242316.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142243330.png">
 <meta property="article:published_time" content="2022-09-27T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-10-16T16:00:00.000Z">
 <meta property="article:author" content="Chaoo">
@@ -253,7 +258,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.6k 字
+          10k 字
         
       </span>
     
@@ -264,7 +269,7 @@
         
         
         
-          72 分钟
+          84 分钟
         
       </span>
     
@@ -589,7 +594,57 @@
 <p>1.官方Docker Hub地址：<a target="_blank" rel="noopener" href="https://hub.docker.com/%EF%BC%8C%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E8%AE%BF%E9%97%AE%E5%A4%AA%E6%85%A2%E4%BA%86%E4%B8%94%E5%87%86%E5%A4%87%E8%A2%AB%E9%98%BF%E9%87%8C%E4%BA%91%E5%8F%96%E4%BB%A3%E7%9A%84%E8%B6%8B%E5%8A%BF%EF%BC%8C%E4%B8%8D%E5%A4%AA%E4%B8%BB%E6%B5%81%E3%80%82">https://hub.docker.com/，中国大陆访问太慢了且准备被阿里云取代的趋势，不太主流。</a></p>
 <p>2.Dockerhub、阿里云这样的公共镜像仓库可能不太方便，涉及机密的公司不可能提供镜像给公网，所以需要创建一个本地私人仓库供给团队使用，基于公司内部项目构建镜像。</p>
 <p>Docker Registry 是官方提供的工具，可以用于构建私有镜像仓库</p>
-<h1 id="📒Docker容器数据卷"><a href="#📒Docker容器数据卷" class="headerlink" title="📒Docker容器数据卷"></a>📒Docker容器数据卷</h1><h1 id="📒Docker常规安装简介"><a href="#📒Docker常规安装简介" class="headerlink" title="📒Docker常规安装简介"></a>📒Docker常规安装简介</h1>
+<h1 id="📒Docker容器数据卷"><a href="#📒Docker容器数据卷" class="headerlink" title="📒Docker容器数据卷"></a>📒Docker容器数据卷</h1><h1 id="Docker常规安装简介"><a href="#Docker常规安装简介" class="headerlink" title="Docker常规安装简介"></a>Docker常规安装简介</h1><h2 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h2><h3 id="✨简单版"><a href="#✨简单版" class="headerlink" title="✨简单版"></a>✨简单版</h3><p><strong>查找镜像</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker searh msyql<br></code></pre></td></tr></table></figure>
+
+<p><strong>拉取镜像</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull mysql:5.7.37<br></code></pre></td></tr></table></figure>
+
+<p><strong>创建容器</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7.37<br><br>docker ps<br><br><span class="hljs-comment"># 进入容器</span><br>docker <span class="hljs-built_in">exec</span> -it 容器ID /bin/bash<br><br>mysql -uroot -p<br></code></pre></td></tr></table></figure>
+
+<p>使用上这种方式进行创建有 docker 上默认字符集隐患，可以通过 <code>SHOW VARIABLES LIKE &#39;character%&#39;</code> 查看默认字符集</p>
+<h3 id="✨实战版"><a href="#✨实战版" class="headerlink" title="✨实战版"></a>✨实战版</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d -p 3306:3306 --privileged=<span class="hljs-literal">true</span> -v /zzyyuse/mysql/log:/var/log/mysql -v /zzyyuse/mysql/data:/var/lib/mysql -v /zzyyuse/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=root  --name mysql mysql:5.7<br></code></pre></td></tr></table></figure>
+
+<p>在<code>/zzyyuse/mysql/conf</code> 中创建 <code>my.cnf</code> 配置文件，通过容器卷同步给 mysql 实例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /zzyyuse/mysql/conf<br>vim my.cnf<br><span class="hljs-built_in">cat</span> my.cnf<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[client]</span><br><span class="hljs-attr">default_character_set</span>=utf8<br><span class="hljs-section">[mysqld]</span><br><span class="hljs-attr">collation_server</span> = utf8_general_ci<br><span class="hljs-attr">character_set_server</span> = utf8<br></code></pre></td></tr></table></figure>
+
+<p>在配置文件中字符集已经被改变了</p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull redis:6.08<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -d -p 6379:6379 redis:6.08<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it xxxxxxxx /bin/bash<br><span class="hljs-comment"># 进入虚拟机</span><br>redis-cli<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>容器卷问题</strong></p>
+<p>Docker 挂载主机目录 Docker 访问出现 cannot open directory .: Permission denied</p>
+<p>解决办法：在挂载目录后多加一个 –privileged&#x3D;true 参数即可</p>
+<p>在CentOS宿主机下新建目录&#x2F;app&#x2F;redis</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> -p /app/redis<br></code></pre></td></tr></table></figure>
+
+<p>将一个 redis.conf 文件模板拷贝进 &#x2F;app&#x2F;redis 目录下</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142234352.png" srcset="/img/loading.gif" lazyload alt="image-20230214223421988"></p>
+<p>&#x2F;app&#x2F;redis 目录下修改 redis.conf 文件</p>
+<p><strong>1 开启redis验证  可选</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">requirepass</span> <span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>2 允许redis外地连接 必须</strong></p>
+<p>注释掉 <code># bind 127.0.0.1</code></p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142237945.png" srcset="/img/loading.gif" lazyload alt="image-20230214223751886"></p>
+<p><code>daemonize no</code></p>
+<p>将 <code>daemonize yes</code> 注释起来或者 <code>daemonize no</code> 设置，因为该配置和 docker run 中 -d 参数冲突，会导致容器一直启动失败</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142238568.png" srcset="/img/loading.gif" lazyload alt="image-20230214223819524"></p>
+<p>开启redis数据持久化 appendonly yes 可选</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run  -p 6379:6379 --name myr3 --privileged=<span class="hljs-literal">true</span> -v /app/redis/redis.conf:/etc/redis/redis.conf -v /app/redis/data:/data -d redis:6.0.8 redis-server /etc/redis/redis.conf<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142242316.png" srcset="/img/loading.gif" lazyload alt="image-20230214224230253"></p>
+<p>测试 redis-cli 连接上来</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302142243330.png" srcset="/img/loading.gif" lazyload alt="image-20230214224306256"></p>
+<p>docker exec -it 运行着 Rediis 服务的容器ID redis-cli</p>
+
                 
               </div>
             
