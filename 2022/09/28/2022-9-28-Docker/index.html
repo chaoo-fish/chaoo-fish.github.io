@@ -24,6 +24,9 @@
 <meta property="og:description" content="Docker学习">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007164529674.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011146895.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011146818.png">
+<meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011852046.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007221112342.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007223427166.png">
 <meta property="og:image" content="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007224952763.png">
@@ -250,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.9k 字
+          8.6k 字
         
       </span>
     
@@ -261,7 +264,7 @@
         
         
         
-          66 分钟
+          72 分钟
         
       </span>
     
@@ -315,13 +318,26 @@
 </blockquote>
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007164529674.png" srcset="/img/loading.gif" lazyload alt="image-20221007164529674"  />
 
-<p>在面对各种让人头痛的环境时，我们选择容器，Dokcer，因为 Docker 给出了一个标准化的解决方案，<strong>系统平滑移植，容器虚拟化技术</strong></p>
+<p>在面对各种让人头痛的环境时，我们选择容器，Docker，因为 Docker 给出了一个标准化的解决方案，<strong>系统平滑移植，容器虚拟化技术</strong></p>
 <p>Docker 的理念就是 <strong>一次镜像，到处运行</strong></p>
 <blockquote>
 <p>这个地方其实和 Java 的概念有些类似</p>
 </blockquote>
 <p>Docker 是解决了运行环境和配置问题的软件容器，方便做持续继承并有助于整体发布的容器虚拟化技术</p>
-<h2 id="容器和虚拟机的比较"><a href="#容器和虚拟机的比较" class="headerlink" title="容器和虚拟机的比较"></a>容器和虚拟机的比较</h2><h2 id="能干嘛"><a href="#能干嘛" class="headerlink" title="能干嘛"></a>能干嘛</h2><h2 id="去哪下"><a href="#去哪下" class="headerlink" title="去哪下"></a>去哪下</h2><p>官网：<a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com/</a></p>
+<h2 id="容器和虚拟机的比较"><a href="#容器和虚拟机的比较" class="headerlink" title="容器和虚拟机的比较"></a>容器和虚拟机的比较</h2><p><strong>传统虚拟机技术</strong></p>
+<p>虚拟机（virtual machine）就是带环境安装的一种解决方案</p>
+<p>它可以在一种操作系统里面运行另一种操作系统，比如在Windows10系统里面运行Linux系统CentOS7。应用程序对此毫无感知，因为虚拟机看上去跟真实系统一模一样，而对于底层系统来说，虚拟机就是一个普通文件，不需要了就删掉，对其他部分毫无影响。这类虚拟机完美的运行了另一套系统，能够使应用程序，操作系统和硬件三者之间的逻辑不变</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011146895.png" srcset="/img/loading.gif" lazyload alt="image-20230201114618819"></p>
+<p>传统虚拟机技术基于安装在主操作系统上的虚拟机管理系统（如：VirtualBox和VMWare等），创建虚拟机（虚拟出各种硬件），在虚拟机上安装从操作系统，在从操作系统中安装部署各种应用</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011146818.png" srcset="/img/loading.gif" lazyload alt="image-20230201114652771"></p>
+<p><strong>容器虚拟化技术</strong></p>
+<p>由于前面虚拟机存在某些缺点，Linux发展出了另一种虚拟化技术：</p>
+<p>Linux容器(Linux Containers，缩写为 LXC)</p>
+<p>Linux容器是与系统其他部分隔离开的一系列进程，从另一个镜像运行，并由该镜像提供支持进程所需的全部文件。容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性。</p>
+<p>Linux 容器不是模拟一个完整的操作系统而是对进程进行隔离。有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置。系统因此而变得高效轻量并保证部署在任何环境中的软件都能始终如一地运行。</p>
+<p><img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/202302011852046.png" srcset="/img/loading.gif" lazyload alt="image-20230201185249965"></p>
+<p>Docker 容器是在操作系统层面上实现虚拟化，直接复用本地主机的操作系统，而传统虚拟机则是在应尽层面实现虚拟化。与传统的虚拟机相比，Docker 优势体现为启动速度快、占用体积小</p>
+<h2 id="能干嘛"><a href="#能干嘛" class="headerlink" title="能干嘛"></a>能干嘛</h2><h2 id="去哪下"><a href="#去哪下" class="headerlink" title="去哪下"></a>去哪下</h2><p>官网：<a target="_blank" rel="noopener" href="https://www.docker.com/">https://www.docker.com/</a></p>
 <p>仓库：<a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
 <h1 id="📒Docker安装"><a href="#📒Docker安装" class="headerlink" title="📒Docker安装"></a>📒Docker安装</h1><p>笔者环境是 CentOS7.4</p>
 <img src="https://sansisuifeng-img.oss-cn-beijing.aliyuncs.com/images/image-20221007221112342.png" srcset="/img/loading.gif" lazyload alt="image-20221007221112342" style="zoom:67%;" />
@@ -671,7 +687,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/15/2022-9-15-%E7%A7%8B%E6%8B%9B%E5%87%86%E5%A4%87/" title="基础小总结">
+                      <a href="/2022/09/15/2022-9-15-%E7%A7%8B%E6%8B%9B%E7%9F%A5%E8%AF%86%E7%82%B9/" title="基础小总结">
                         <span class="hidden-mobile">基础小总结</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
